@@ -26,7 +26,7 @@ export PYTHONPATH=$PYTHONPATH:$sedona_home/adm
 # java environment - use JAVA_HOME from environment if set, otherwise hard code it
 #Titus : Modified for PC java installed location
 java_home=$JAVA_HOME
-[ -z "$java_home" ] && java_home=/usr/lib/jvm/java-6-openjdk-i386
+[ -z "$java_home" ] && java_home=/usr/lib/jvm/java-7-openjdk-i386
 #[ -z "$java_home" ] && java_home=/usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt
 export java_home
 

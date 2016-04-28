@@ -200,15 +200,15 @@ BACNET_BINARY_PV Binary_Output_Present_Value(
     if (index < MAX_BINARY_OUTPUTS) {
         for (i = 0; i < BACNET_MAX_PRIORITY; i++) {
 	 priority_act = i;
-	printf("index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+//	printf("index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
             if (Binary_Output_Level[index][i] != BINARY_NULL) {
                 value = Binary_Output_Level[index][i];
-	printf("SUCCESSFUL index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+//	printf("SUCCESSFUL index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
 
 	//updating the "level2" var to sending the value to SAE.
 	level2 = value;
 
-	printf("VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
+//	printf("VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
                 break;
             }
         }

@@ -1,0 +1,29 @@
+<!--
+  -  Sedona Kit
+  -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -->
+
+<sedonaKit
+ name = "BACnet"
+ vendor = "Tridium"
+ description = "Support for Raspberry Pi BACnet control"
+ includeSource = "true"
+ doc = "true"
+>
+
+  <!-- Dependencies -->
+  <depend on="sys 1.2" />
+
+  <!-- Source Directories -->
+  <source dir="."/>
+
+  <!-- Natives -->  
+  <native qname="BACnet::BACnetDev.doBacnetInit"                 id="85::0" />
+  <native qname="BACnet::BACnetDev.doBacnetValueStatus"          id="85::1" />
+  <native qname="BACnet::BACnetDev.doBacnetPriorityStatus"       id="85::2" />
+  <native qname="BACnet::BACnetDev.doBacnetOverrideStatus"       id="85::3" />
+  <native qname="BACnet::BACnetDev.doBacnetValueUpdate"          id="85::4" />
+  <native qname="BACnet::BACnetDev.doBacnetInitStatus"           id="85::5" />
+
+</sedonaKit>
+

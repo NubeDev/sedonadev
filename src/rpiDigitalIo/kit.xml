@@ -1,0 +1,27 @@
+<!--
+  -  Sedona Kit
+  -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -->
+
+<sedonaKit
+ name = "rpiDigitalIo"
+ vendor = "Tridium"
+ description = "Support for Raspberry Pi digital I/O"
+ includeSource = "true"
+ doc = "true"
+>
+
+  <!-- Dependencies -->
+  <depend on="sys 1.2" />
+
+  <!-- Source Directories -->
+  <source dir="."/>
+
+  <!-- Natives -->  
+  <native qname="rpiDigitalIo::Dio.doInit"                 id="4::0" />
+  <native qname="rpiDigitalIo::Dio.doRead"                 id="4::1" />
+  <native qname="rpiDigitalIo::Dio.doWrite"                id="4::2" />
+
+
+</sedonaKit>
+

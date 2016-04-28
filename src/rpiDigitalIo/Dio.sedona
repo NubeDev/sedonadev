@@ -1,0 +1,41 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   19 Nov 07  Elizabeth McKenney   creation
+//
+
+**
+** Dio models a general purpose digital I/O
+**
+class Dio
+{
+  ** Use this for second arg to init() if DIO should be input line
+  define bool INPUT  = true
+  ** Use this for second arg to init() if DIO should be output line
+  define bool OUTPUT = false
+
+  //////////////////////////////////////////////////////////////////////////
+  // Native methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initialize the DIO based on current values of the config properties.
+  **
+  native static int doInit(int whichDio, bool bDirection)
+
+  **
+  ** Read the DIO value.  Returns 0 or 1 according to physical DIO value, or
+  **   -1 if whichDio is out of range.
+  **
+  native static int doRead(int whichDio)
+
+  **
+  ** Write bValue to the DIO.  Returns 0 if successful, or -1 if whichDio is 
+  ** out of range.
+  **
+  native static int doWrite(int whichDio, bool bValue)
+
+}
+

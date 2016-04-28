@@ -1,0 +1,47 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="logManager"
+   checksum="da7714f6"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Support for managing logs"
+   buildHost="tie2e"
+   buildTime="2016-04-23T17:51:10.484+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- logManager::LogCfg -->
+<type id="0" name="LogCfg" sizeof="108" base="sys::Component">
+  <facets>
+    <bool name="palette" val="false"/>
+  </facets>
+  <slot id="0" name="logName" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="64"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="logLevel" type="int" flags="c" default="3">
+    <facets>
+      <bool name="config" val="true"/>
+      <str name="range" val="none, error, warning, message, trace"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- logManager::LogMgr -->
+<type id="1" name="LogMgr" sizeof="48" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/wrench.png"/>
+  </facets>
+</type>
+
+</kitManifest>

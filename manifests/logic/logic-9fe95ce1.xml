@@ -1,0 +1,218 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="logic"
+   checksum="9fe95ce1"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Logic function block library"
+   buildHost="tie2e"
+   buildTime="2016-04-23T17:51:10.748+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- logic::ADemux2 -->
+<type id="0" name="ADemux2" sizeof="52" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/split.png"/>
+  </facets>
+  <slot id="0" name="out1" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="out2" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="in" type="float"/>
+  <slot id="3" name="s1" type="bool"/>
+</type>
+
+<!-- logic::ASW -->
+<type id="1" name="ASW" sizeof="52" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="float"/>
+  <slot id="2" name="in2" type="float"/>
+  <slot id="3" name="s1" type="bool"/>
+</type>
+
+<!-- logic::ASW4 -->
+<type id="2" name="ASW4" sizeof="64" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/select.png"/>
+  </facets>
+  <slot id="0" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="float"/>
+  <slot id="2" name="in2" type="float"/>
+  <slot id="3" name="in3" type="float"/>
+  <slot id="4" name="in4" type="float"/>
+  <slot id="5" name="startsAt" type="int" flags="c" default="0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="6" name="sel" type="int"/>
+</type>
+
+<!-- logic::And2 -->
+<type id="3" name="And2" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/logic/and.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="bool"/>
+  <slot id="2" name="in2" type="bool"/>
+</type>
+
+<!-- logic::And4 -->
+<type id="4" name="And4" sizeof="44" base="logic::And2">
+  <slot id="0" name="in3" type="bool"/>
+  <slot id="1" name="in4" type="bool"/>
+</type>
+
+<!-- logic::B2P -->
+<type id="5" name="B2P" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/control.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="bool"/>
+</type>
+
+<!-- logic::BSW -->
+<type id="6" name="BSW" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="bool"/>
+  <slot id="2" name="in2" type="bool"/>
+  <slot id="3" name="s1" type="bool"/>
+</type>
+
+<!-- logic::DemuxI2B4 -->
+<type id="7" name="DemuxI2B4" sizeof="48" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="in" type="int"/>
+  <slot id="1" name="out1" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="out2" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="out3" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="out4" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="5" name="startsAt" type="int" flags="c" default="0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- logic::ISW -->
+<type id="8" name="ISW" sizeof="52" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="out" type="int">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="int"/>
+  <slot id="2" name="in2" type="int"/>
+  <slot id="3" name="s1" type="bool"/>
+</type>
+
+<!-- logic::Not -->
+<type id="9" name="Not" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/logic/not.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="bool"/>
+</type>
+
+<!-- logic::Or2 -->
+<type id="10" name="Or2" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/logic/or.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="bool"/>
+  <slot id="2" name="in2" type="bool"/>
+</type>
+
+<!-- logic::Or4 -->
+<type id="11" name="Or4" sizeof="44" base="logic::Or2">
+  <slot id="0" name="in3" type="bool"/>
+  <slot id="1" name="in4" type="bool"/>
+</type>
+
+<!-- logic::Xor -->
+<type id="12" name="Xor" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/logic/xor.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in1" type="bool"/>
+  <slot id="2" name="in2" type="bool"/>
+</type>
+
+</kitManifest>

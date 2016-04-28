@@ -1,0 +1,119 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   04 Jun 09  Elizabeth McKenney   Adapted from Gpio.sedona
+//   15 Dec 09  Elizabeth McKenney   Avoid touching hardware until input is valid
+//
+
+**
+** DioOut models a general purpose digital output
+**
+//@niagaraIcon="module://icons/x16/io.png"
+class DioOut
+  extends Component    
+{
+
+  //////////////////////////////////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////////////////////////////////
+
+  ** Which physical DIO this corresponds to
+  @defaultOnClone
+  @config property int  dioNum = -1           // -1 is uninitialized/invalid
+
+  ** Whether the value will be inverted before writing to hardware;
+  ** defaults to false (not inverted).
+  @config property bool invert = false   
+
+  ** Value to be written to the hardware output
+  property bool in = null
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Component methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initialize the component
+  **
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() || (in==null) ) 
+      return                     
+
+    // If init succeeds, set isInit true
+    isInit = init( dioNum, in )
+
+    return
+  }
+
+
+  **
+  ** Write current value of in to the DIO output
+  **
+  virtual override void execute()
+  {
+    // If not yet initialized, do that first
+    if (isInit) 
+      write(in) 
+    else 
+      start()
+    return
+  }
+
+
+  **
+  ** Respond as needed to changes in property values.
+  ** 
+  override void changed(Slot slot)
+  {
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+    // If DIO# changes, force re-init 
+    if (slot == DioOut.dioNum)
+      isInit = false
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Public Dio methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initializes the DIO as an output, with initial value bValue.
+  ** Returns true on success, false on failure.
+  **
+  bool init(int dio, bool bValue)
+  {
+    // Init the value before we set DIO as output
+    Dio.doWrite( dio, invert ^ bValue )
+
+    return Dio.doInit( dio, Dio.OUTPUT ) >= 0
+  }
+
+
+  **
+  ** Writes bValue to the DIO, or inverse of bValue if invert==true.
+  ** Returns true on success, false on failure.
+  **
+  bool write(bool bValue)
+  {
+    int rc = Dio.doWrite( dioNum, invert ^ bValue )
+    return rc>=0
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Fields
+  //////////////////////////////////////////////////////////////////////////
+
+  bool isInit = false
+
+}
+

@@ -1,0 +1,26 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="tutorial_tit"
+   checksum="7ce489a1"
+   hasNatives="false"
+   doc="false"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Testing sedona framework"
+   buildHost="e2e"
+   buildTime="2016-04-05T20:00:55.779+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- tutorial_tit::Add_Test -->
+<type id="0" name="Add_Test" sizeof="48" base="sys::Component">
+  <slot id="0" name="out_tit" type="float"/>
+  <slot id="1" name="in1_tit" type="float"/>
+  <slot id="2" name="in2_tit" type="float"/>
+</type>
+
+</kitManifest>

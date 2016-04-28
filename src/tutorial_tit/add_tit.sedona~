@@ -1,0 +1,9 @@
+public class Add_Test extends Component
+{
+  property float out_tit
+  property float in1_tit
+  property float in2_tit
+
+  override void execute() { out_tit := in1_tit + in2_tit }
+}
+

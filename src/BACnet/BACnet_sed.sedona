@@ -1,0 +1,24 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   06 Apr 16  Titus   creation
+//
+
+class BACnetDev
+{
+
+  //////////////////////////////////////////////////////////////////////////
+  // Native methods
+  //////////////////////////////////////////////////////////////////////////
+
+  native static int doBacnetInit()
+  native static int doBacnetValueStatus()
+  native static int doBacnetPriorityStatus(int priority, bool pri_change)
+  native static int doBacnetOverrideStatus()
+  native static int doBacnetValueUpdate(bool sedona_level, bool In_change, int objectID)
+  native static int doBacnetInitStatus()
+
+}
+

@@ -1,0 +1,34 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   06 Apr 16  Titus   creation
+//
+
+
+//@niagaraIcon="module://icons/x16/io.png"
+class BACnetInit
+  extends Component    
+{
+
+  @defaultOnClone
+//  @config property bool  bac_enable = true
+
+  public bool init()
+  {
+    return BACnetDev.doBacnetInit() >= 0
+  }
+
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() ) 
+      return                     
+
+    // If init succeeds, set isInit true
+	init()
+    return
+  }
+
+}

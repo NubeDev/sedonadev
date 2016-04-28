@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="datetime"
+   checksum="3a280dce"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="date time functions"
+   buildHost="tie2e"
+   buildTime="2016-04-23T17:51:10.268+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- datetime::DateTimeService -->
+<type id="0" name="DateTimeService" sizeof="128" base="sys::Service">
+  <slot id="0" name="nanos" type="long">
+    <facets>
+      <str name="unit" val="nanosecond"/>
+    </facets>
+  </slot>
+  <slot id="1" name="hour" type="byte"/>
+  <slot id="2" name="minute" type="byte"/>
+  <slot id="3" name="second" type="byte"/>
+  <slot id="4" name="year" type="int"/>
+  <slot id="5" name="month" type="byte"/>
+  <slot id="6" name="day" type="byte"/>
+  <slot id="7" name="dayOfWeek" type="byte"/>
+  <slot id="8" name="utcOffset" type="int" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+      <str name="unit" val="second"/>
+    </facets>
+  </slot>
+  <slot id="9" name="osUtcOffset" type="bool" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="tz" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="32"/>
+    </facets>
+  </slot>
+  <slot id="11" name="refresh" type="void" flags="a"/>
+  <slot id="12" name="setSysClock" type="long" flags="a"/>
+</type>
+
+</kitManifest>

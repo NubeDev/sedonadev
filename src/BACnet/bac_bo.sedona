@@ -1,0 +1,155 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   06 Apr 16  Titus   creation
+//
+
+
+//@niagaraIcon="module://icons/x16/io.png"
+class BACnetBO
+  extends Component    
+{
+
+  @defaultOnClone
+
+  @config property int Priority = 10
+  @config property bool In = false
+  @config property bool Out = false
+  @config property int ObjectID = 0
+
+
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() ) 
+      return
+
+	Sys.out.print("Sedona app Started!\n")
+
+    return
+  }
+
+
+  override void changed(Slot slot)
+  {
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+    // If BACnetBO.In changes, clear the override and drive what IN has.
+    if (slot == BACnetBO.In)
+	{
+	this.false_bkp = false;
+	this.true_bkp = false;
+	this.In_change = true;
+	Sys.out.print("Override is cleared as \"BACnetBO.In\" is changed, so now, drive what \"BACnetBO.In\" has! ( please note that you can't write when BDT@1, need to write 'null' in BDT) \n")
+	}
+
+
+    // If BACnetBO.Priority changes, clear the override and drive what IN has.
+    if (slot == BACnetBO.ObjectID)
+	{
+	Sys.out.print("\"BACnetBO.ObjectID\" is changed !\n")
+	}
+
+
+
+  }
+
+ virtual override void execute()
+  {
+
+this.ret3 = BACnetDev.doBacnetInitStatus()
+
+this.ret = BACnetDev.doBacnetValueStatus()
+
+this.override_en = BACnetDev.doBacnetOverrideStatus()
+
+if (this.ret3 == 0)
+Sys.out.print("\"BACnetBO\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetBO\n")
+
+
+//overriding part
+if( this.override_en == 1 )
+      {
+
+Sys.out.print("BDT is trying to write the \"BACnetBO.Out\" with higher priority (called override) !\n")
+//Send out the data if override (priority is selected as per levels) happened
+if (this.ret == 1)
+  {
+this.Out := true
+this.true_bkp = true
+
+this.false_bkp = false
+  }
+else
+  {
+this.Out := false
+this.false_bkp = true
+
+this.true_bkp = false
+  }
+
+//clearing the override
+this.override_en = 0
+      }
+
+if( this.true_bkp )
+this.Out := true
+
+if( this.false_bkp )
+this.Out := false
+
+//all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
+if ( (this.ret3 == 1) && (this.pri_bkp == false) && (this.false_bkp == false) && (this.true_bkp == false) && ( this.priority_max >= this.Priority ) )
+{
+this.Out := this.In
+
+//need to send the Out value to BACnet to update the "level" variable to replicate the same in BDT tool.
+BACnetDev.doBacnetValueUpdate(this.Out, this.In_change, this.ObjectID)
+this.In_change = false;
+}
+
+if (this.Priority > 16)
+{
+Sys.out.print("Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
+this.Priority := 10
+}
+
+//Its for setting priority to BDT
+this.ret2 = BACnetDev.doBacnetPriorityStatus(this.Priority, this.pri_change)
+
+//increaing the priority as its decreased for array priority store
+this.ret2++;
+//Sys.out.print("Priority level is $this.ret2\n")
+
+if ( this.ret2 != 1 )
+{
+this.pri_bkp = false;
+//Sys.out.print("Priority level is cleared by writing NULL @1 in BDT\n")
+}
+
+if ( this.ret2 == 1 )
+{
+this.pri_bkp = true;
+//Sys.out.print("Priority level is set @1 in BDT\n")
+}
+  }
+
+
+//defining the local variables
+int override_en = 0;
+int ret = 0;
+int ret2 = 255;
+int ret3 = 0;
+int priority_max = 16;
+bool false_bkp = false;
+bool true_bkp = false;
+bool In_change = null;
+bool pri_change = null;
+bool pri_bkp = false;
+
+}

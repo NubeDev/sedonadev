@@ -33,6 +33,7 @@
   <target name="pricomp" />
   <target name="rpiDigitalIo" />
   <target name="BACnet" />
+  <target name="i2c" />
 
 </sedonaDir>
 

@@ -1,36 +1,31 @@
 <?xml version='1.0'?>
-<!-- This SAX file contains a platUnix::UnixPlatformService -->
-
 <sedonaApp>
 <schema>
-  <kit name='sys'/>
-  <kit name='sox'/>
-  <kit name='inet'/>
-  <kit name='web'/>
-  <kit name='pstore'/>
-  <kit name='datetime'/>
-  <kit name='datetimeStd'/>
-  <kit name='basicSchedule' />
-  <kit name='platUnix' />
-
-  <kit name='func' />
-  <kit name='hvac' />
-  <kit name='logic' />
-  <kit name='math' />
-  <kit name='timing' />
-  <kit name='types' />
-
-  <kit name='rpiDigitalIo' />
-  <kit name='BACnet' />
+  <kit name="sys" checksum="d3984c51" />
+  <kit name="BACnet" checksum="e8aa7dde" />
+  <kit name="basicSchedule" checksum="7fdca638" />
+  <kit name="datetime" checksum="3a280dce" />
+  <kit name="datetimeStd" checksum="fc5628d7" />
+  <kit name="func" checksum="821b7396" />
+  <kit name="hvac" checksum="7264c67c" />
+  <kit name="inet" checksum="25648ba7" />
+  <kit name="logic" checksum="9fe95ce1" />
+  <kit name="math" checksum="c22b255c" />
+  <kit name="platUnix" checksum="751711ab" />
+  <kit name="pstore" checksum="7ea2cb06" />
+  <kit name="rpiDigitalIo" checksum="b1afa98d" />
+  <kit name="sox" checksum="397a84dd" />
+  <kit name="timing" checksum="aeaac82a" />
+  <kit name="types" checksum="10936551" />
+  <kit name="web" checksum="0462d43e" />
 </schema>
-
-<app>               
+<app>
   <prop name="appName" val="demo"/>
   <!-- /service -->
   <comp name="service" id="1" type="sys::Folder">
     <prop name="meta" val="33685505"/>
     <!-- /service/plat -->
-    <comp name="plat" type="platUnix::UnixPlatformService"/>
+    <comp name="plat" id="9" type="platUnix::UnixPlatformService"/>
     <!-- /service/users -->
     <comp name="users" id="3" type="sys::UserService">
       <prop name="meta" val="17367041"/>
@@ -51,13 +46,11 @@
       <prop name="port" val="8080"/>
     </comp>
     <!-- /service/pstore -->
-    <comp name="pstore" type="pstore::PstoreService">
-    </comp>
+    <comp name="pstore" id="11" type="pstore::PstoreService"/>
     <!-- /service/time -->
-    <comp name="time" type="datetimeStd::DateTimeServiceStd">
+    <comp name="time" id="12" type="datetimeStd::DateTimeServiceStd">
       <prop name="osUtcOffset" val="true"/>
     </comp>
-
   </comp>
   <!-- /play -->
   <comp name="play" id="10" type="sys::Folder">
@@ -65,8 +58,8 @@
     <!-- /play/rampA -->
     <comp name="rampA" id="7" type="func::Ramp">
       <prop name="meta" val="67371009"/>
-      <prop name="min" val="20.00000"/>
-      <prop name="max" val="80.00000"/>
+      <prop name="min" val="20.0"/>
+      <prop name="max" val="80.0"/>
     </comp>
     <!-- /play/rampB -->
     <comp name="rampB" id="8" type="func::Ramp">
@@ -77,36 +70,9 @@
       <prop name="meta" val="386662401"/>
     </comp>
   </comp>
-
-
-<!--
-    BACnet Server
-    <comp name="BACser" type="BACnet::BACnetInit">
-    </comp>
-
-    rpiDigitalIo
-    <comp name="DIO" type="rpiDigitalIo::DioOut">
-    </comp>
-
-    BACnet BO
-    <comp name="BACnetBO" type="BACnet::BACnetBO">
-    </comp>
--->
-
-
 </app>
-
-<!--
-<links>
-  <link from="/BACnetBO.in" to="/DioOut.dioNum"/>
-  <link from="/BACnetBO.out" to="/DioOut.in"/>
-</links>
--->
-
 <links>
   <link from="/play/rampB.out" to="/play/adder.in2"/>
   <link from="/play/rampA.out" to="/play/adder.in1"/>
 </links>
-
-
 </sedonaApp>

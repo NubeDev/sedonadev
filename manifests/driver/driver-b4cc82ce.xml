@@ -8,7 +8,11 @@
    vendor="Tridium"
    description="general driver"
    buildHost="tie2e"
+<<<<<<< HEAD
    buildTime="2016-05-06T22:45:06.752+05:30"
+=======
+   buildTime="2016-05-06T22:50:13.035+05:30"
+>>>>>>> analogout
 >
 
 <!-- Dependencies -->

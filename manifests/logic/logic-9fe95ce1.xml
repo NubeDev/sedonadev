@@ -8,7 +8,11 @@
    vendor="Tridium"
    description="Logic function block library"
    buildHost="tie2e"
+<<<<<<< HEAD
    buildTime="2016-05-06T22:45:07.309+05:30"
+=======
+   buildTime="2016-05-06T22:50:13.575+05:30"
+>>>>>>> analogout
 >
 
 <!-- Dependencies -->

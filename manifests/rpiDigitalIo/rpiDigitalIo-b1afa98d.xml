@@ -8,7 +8,11 @@
    vendor="Tridium"
    description="Support for Raspberry Pi digital I/O"
    buildHost="tie2e"
+<<<<<<< HEAD
    buildTime="2016-05-06T22:05:54.216+05:30"
+=======
+   buildTime="2016-05-06T22:17:36.110+05:30"
+>>>>>>> analogout
 >
 
 <!-- Dependencies -->

@@ -108,6 +108,10 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetOverrideStatus" id="85::3" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetValueUpdate" id="85::4" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetInitStatus" id="85::5" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueStatus" id="85::6" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOPriorityStatus" id="85::7" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOOverrideStatus" id="85::8" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueUpdate" id="85::9" />
 </natives>
 
 <manifestIncludes>

@@ -20,5 +20,11 @@ class BACnetDev
   native static int doBacnetValueUpdate(bool sedona_level, bool In_change, int objectID)
   native static int doBacnetInitStatus()
 
+
+  native static float doBacnetAOValueStatus()
+  native static int doBacnetAOPriorityStatus(int priority, bool pri_change)
+  native static int doBacnetAOOverrideStatus()
+  native static int doBacnetAOValueUpdate(float sedona_level, bool In_change, int objectID)
+
 }
 

@@ -8,7 +8,11 @@
    vendor="Tridium"
    description="Persistent random access, block storage for app data"
    buildHost="tie2e"
+<<<<<<< HEAD
    buildTime="2016-05-06T22:05:53.736+05:30"
+=======
+   buildTime="2016-05-06T22:17:35.632+05:30"
+>>>>>>> analogout
 >
 
 <!-- Dependencies -->

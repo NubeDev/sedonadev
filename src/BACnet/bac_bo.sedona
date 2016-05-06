@@ -19,6 +19,12 @@ class BACnetBO
   @config property bool Out = false
   @config property int ObjectID = 0
 
+/*
+virtual void loaded()
+{
+
+}
+*/
 
   virtual override void start()
   {
@@ -26,7 +32,7 @@ class BACnetBO
     if ( !Sys.app.isSteadyState() ) 
       return
 
-	Sys.out.print("Sedona app Started!\n")
+	Sys.out.print("Sedona app BACnetBO is Started!\n")
 
     return
   }

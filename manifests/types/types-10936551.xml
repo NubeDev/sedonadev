@@ -8,7 +8,11 @@
    vendor="Tridium"
    description="Basic types and constants"
    buildHost="tie2e"
+<<<<<<< HEAD
    buildTime="2016-05-06T22:05:53.897+05:30"
+=======
+   buildTime="2016-05-06T22:17:35.793+05:30"
+>>>>>>> analogout
 >
 
 <!-- Dependencies -->

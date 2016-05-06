@@ -8,11 +8,7 @@
    vendor="Tridium"
    description="Web service and servlet engine"
    buildHost="tie2e"
-<<<<<<< HEAD
-   buildTime="2016-05-06T22:05:53.227+05:30"
-=======
-   buildTime="2016-05-06T22:17:35.136+05:30"
->>>>>>> analogout
+   buildTime="2016-05-06T22:45:06.497+05:30"
 >
 
 <!-- Dependencies -->

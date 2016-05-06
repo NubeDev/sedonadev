@@ -8,11 +8,7 @@
    vendor="Tridium"
    description="Sox service for remote management"
    buildHost="tie2e"
-<<<<<<< HEAD
-   buildTime="2016-05-06T22:05:52.981+05:30"
-=======
-   buildTime="2016-05-06T22:17:34.896+05:30"
->>>>>>> analogout
+   buildTime="2016-05-06T22:45:06.271+05:30"
 >
 
 <!-- Dependencies -->

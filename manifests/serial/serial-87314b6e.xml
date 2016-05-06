@@ -8,11 +8,7 @@
    vendor="Tridium"
    description="Serial I/O support"
    buildHost="tie2e"
-<<<<<<< HEAD
-   buildTime="2016-05-06T22:05:53.150+05:30"
-=======
-   buildTime="2016-05-06T22:17:35.059+05:30"
->>>>>>> analogout
+   buildTime="2016-05-06T22:45:06.404+05:30"
 >
 
 <!-- Dependencies -->

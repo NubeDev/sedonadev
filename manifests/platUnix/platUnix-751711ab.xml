@@ -8,11 +8,7 @@
    vendor="Tridium"
    description="Platform support for Unix based devices"
    buildHost="tie2e"
-<<<<<<< HEAD
-   buildTime="2016-05-06T22:45:07.113+05:30"
-=======
-   buildTime="2016-05-06T22:50:13.388+05:30"
->>>>>>> analogout
+   buildTime="2016-05-06T22:56:59.778+05:30"
 >
 
 <!-- Dependencies -->

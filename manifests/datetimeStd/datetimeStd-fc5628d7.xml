@@ -8,11 +8,7 @@
    vendor="Tridium"
    description="date time OS service using stdlib"
    buildHost="tie2e"
-<<<<<<< HEAD
-   buildTime="2016-05-06T22:45:06.873+05:30"
-=======
-   buildTime="2016-05-06T22:50:13.160+05:30"
->>>>>>> analogout
+   buildTime="2016-05-06T22:56:59.550+05:30"
 >
 
 <!-- Dependencies -->

@@ -101,6 +101,8 @@ Cell sys_Component_getFloat(SedonaVM* vm, Cell* params)
   uint16_t offset = getSlotHandle(vm, slot);
   Cell ret;
 
+//printf("###################### sys_Component_getFloat #########################\n");	
+
   if (typeId != FloatTypeId)
     return accessError(vm, "getFloat", self, slot);
 

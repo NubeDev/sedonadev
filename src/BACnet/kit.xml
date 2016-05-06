@@ -25,5 +25,10 @@
   <native qname="BACnet::BACnetDev.doBacnetValueUpdate"          id="85::4" />
   <native qname="BACnet::BACnetDev.doBacnetInitStatus"           id="85::5" />
 
+  <native qname="BACnet::BACnetDev.doBacnetAOValueStatus"          id="85::6" />
+  <native qname="BACnet::BACnetDev.doBacnetAOPriorityStatus"       id="85::7" />
+  <native qname="BACnet::BACnetDev.doBacnetAOOverrideStatus"       id="85::8" />
+  <native qname="BACnet::BACnetDev.doBacnetAOValueUpdate"          id="85::9" />
+
 </sedonaKit>
 

@@ -58,8 +58,8 @@ volatile static unsigned int priority_act = 255; //default value
 
 
 //make it global
-unsigned int object_index = 0;//TODO: whether we can use this as static
-unsigned int priority = 0;
+static unsigned int object_index = 0;//TODO: whether we can use this as static
+static unsigned int priority = 0;
 //make it to global
 //BACNET_BINARY_PV level = BINARY_NULL;
 

@@ -548,8 +548,8 @@ bool Analog_Output_Write_Property(
 
 	//this line is required & important to update the value
 	level2_ao = Analog_Output_Present_Value(wp_data->object_instance);
-
             break;
+
         case PROP_OUT_OF_SERVICE:
             status =
                 WPValidateArgType(&value, BACNET_APPLICATION_TAG_BOOLEAN,
@@ -587,10 +587,8 @@ bool Analog_Output_Write_Property(
 Cell BACnet_BACnetDev_doBacnetAOValueStatus(SedonaVM* vm, Cell* params)
 {
 
-Cell result;
-
+	Cell result;
 //    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus: Value : %f\n",level2_ao);
-
 	result.fval = level2_ao;
 	return result;
 

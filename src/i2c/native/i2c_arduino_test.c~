@@ -23,6 +23,8 @@ int file,value=1;
 char filename[40];
 char buf[10] = {0};
 int addr = 0x09;        // The I2C address of the Arduino I2C slave board
+bool read_status_i2c = false;
+bool read_status_sensor = false;
 
 
 //for arm_v5t_le- toolchain
@@ -47,6 +49,13 @@ i2c_I2cDev_doI2cInit(SedonaVM* vm, Cell* params)
 
 	}
 
+i2c_I2cDev_doI2cExit(SedonaVM* vm, Cell* params)
+	{
+	printf("Titus : Closed the i2c bus.\n");
+	close(file);
+	}
+	
+
 
 i2c_I2cDev_doI2cWrite(SedonaVM* vm, Cell* params)
 {
@@ -69,16 +78,46 @@ printf("\n\n");
 i2c_I2cDev_doI2cRead(SedonaVM* vm, Cell* params)
 {
 
-//I2C READ
-if (read(file,buf,1) != 1) {
-/* ERROR HANDLING: i2c transaction failed */
-printf("Titus : Failed to read from the i2c bus\n");
-exit(1);
-printf("\n\n");
- }
+	if(read_status_sensor)
+	{
+	printf("Titus : I2C READ Enabled for sensor\n");
+	//I2C READ
+	if (read(file,buf,1) != 1) {
+	/* ERROR HANDLING: i2c transaction failed */
+	printf("Titus : Failed to read from the i2c bus\n");
+	exit(1);
+	printf("\n\n");
+		}
+	 }
 
 printf("Titus : read from the i2c bus, value %d\n",buf[0]);
-
-//printf("Titus : read from the i2c bus, value %d %d %d \n",buf[0],buf[1],buf[2]);
 return buf[0];
+
 }
+
+i2c_I2cDev_doI2cSensorReadEnStatus(SedonaVM* vm, Cell* params)
+{
+	read_status_sensor = params[0].ival;
+}
+
+#if 0
+i2c_I2cDev_doI2cSensorRead(SedonaVM* vm, Cell* params)
+{
+
+	if(read_status_sensor)
+	{
+
+	//I2C READ
+	if (read(file,buf,1) != 1) {
+	/* ERROR HANDLING: i2c transaction failed */
+	printf("Titus : Failed to read from the i2c bus\n");
+	exit(1);
+	printf("\n\n");
+		}
+	 }
+
+//printf("Titus : read from the i2c bus, value %d\n",buf[0]);
+return buf[0];
+
+}
+#endif

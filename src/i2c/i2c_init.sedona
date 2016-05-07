@@ -14,10 +14,16 @@ class I2cInit
 
   @defaultOnClone
 
-  public bool init()
+  public bool i2c_init()
   {
     return I2cDev.doI2cInit() >= 0
   }
+
+  public bool i2c_exit()
+  {
+    return I2cDev.doI2cExit() >= 0
+  }
+
 
   virtual override void start()
   {
@@ -26,8 +32,13 @@ class I2cInit
       return                     
 
     // If init succeeds, set isInit true
-	init()
+	i2c_init()
     return
   }
+
+  virtual override void stop()
+	{
+	i2c_exit()
+	}
 
 }

@@ -14,8 +14,10 @@ class I2cDev
   //////////////////////////////////////////////////////////////////////////
 
   native static int doI2cInit()
+  native static int doI2cExit()
   native static int doI2cRead()
   native static int doI2cWrite(int val)
+  native static int doI2cSensorReadEnStatus(bool status)
 
 }
 

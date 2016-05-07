@@ -19,8 +19,10 @@
 
   <!-- Natives -->  
   <native qname="i2c::I2cDev.doI2cInit"          id="86::0" />
-  <native qname="i2c::I2cDev.doI2cRead"          id="86::1" />
-  <native qname="i2c::I2cDev.doI2cWrite"         id="86::2" />
+  <native qname="i2c::I2cDev.doI2cExit"          id="86::1" />
+  <native qname="i2c::I2cDev.doI2cRead"          id="86::2" />
+  <native qname="i2c::I2cDev.doI2cWrite"         id="86::3" />
+  <native qname="i2c::I2cDev.doI2cSensorReadEnStatus"  id="86::4" />
 
 </sedonaKit>
 

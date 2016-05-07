@@ -17,6 +17,7 @@ class I2cAccess
 
   @config property int Read = 0
   @config property int Write = 0
+  @config property bool Enable = false
 
 
   virtual override void start()
@@ -25,7 +26,7 @@ class I2cAccess
     if ( !Sys.app.isSteadyState() ) 
       return
 
-	Sys.out.print("Sedona app Started!\n")
+	Sys.out.print("Sedona I2C app Started!\n")
 
     return
   }
@@ -45,11 +46,19 @@ class I2cAccess
 	I2cDev.doI2cWrite(Write)
 	}
 
+    // If I2cAccess.Enable changes, send the status change to native i2c driver.
+    if (slot == I2cAccess.Enable)
+	{
+	Sys.out.print("\"I2cAccess.Enable\" is changed !\n")
+	I2cDev.doI2cSensorReadEnStatus(Enable);
+	}
+
   }
 
 
  virtual override void execute()
 {
+	if(Enable)
 	Read := I2cDev.doI2cRead()
 }
 

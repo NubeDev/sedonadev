@@ -109,16 +109,15 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetOverrideStatus" id="85::3" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetValueUpdate" id="85::4" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetInitStatus" id="85::5" />
-<<<<<<< HEAD
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueStatus" id="85::6" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOPriorityStatus" id="85::7" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOOverrideStatus" id="85::8" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueUpdate" id="85::9" />
-=======
   <nativeMethod qname="i2c::I2cDev.doI2cInit" id="86::0" />
-  <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::1" />
-  <nativeMethod qname="i2c::I2cDev.doI2cWrite" id="86::2" />
->>>>>>> i2carduino
+  <nativeMethod qname="i2c::I2cDev.doI2cExit" id="86::1" />
+  <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />
+  <nativeMethod qname="i2c::I2cDev.doI2cWrite" id="86::3" />
+  <nativeMethod qname="i2c::I2cDev.doI2cSensorReadEnStatus" id="86::4" />
 </natives>
 
 <manifestIncludes>

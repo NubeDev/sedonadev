@@ -1,0 +1,33 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   30 Apr 16  Titus   creation
+//
+
+
+//@niagaraIcon="module://icons/x16/io.png"
+class I2cInit
+  extends Component    
+{
+
+  @defaultOnClone
+
+  public bool init()
+  {
+    return I2cDev.doI2cInit() >= 0
+  }
+
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() ) 
+      return                     
+
+    // If init succeeds, set isInit true
+	init()
+    return
+  }
+
+}

@@ -1,0 +1,26 @@
+<!--
+  -  Sedona Kit
+  -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -->
+
+<sedonaKit
+ name = "i2c"
+ vendor = "Tridium"
+ description = "Support for I2C bus to control the arduino as slave"
+ includeSource = "true"
+ doc = "true"
+>
+
+  <!-- Dependencies -->
+  <depend on="sys 1.2" />
+
+  <!-- Source Directories -->
+  <source dir="."/>
+
+  <!-- Natives -->  
+  <native qname="i2c::I2cDev.doI2cInit"          id="86::0" />
+  <native qname="i2c::I2cDev.doI2cRead"          id="86::1" />
+  <native qname="i2c::I2cDev.doI2cWrite"         id="86::2" />
+
+</sedonaKit>
+

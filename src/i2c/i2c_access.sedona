@@ -1,0 +1,57 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   30 Apr 16  Titus   creation
+//   2  Apr 16  Titus   Modified
+//
+
+
+//@niagaraIcon="module://icons/x16/io.png"
+class I2cAccess
+  extends Component    
+{
+
+  @defaultOnClone
+
+  @config property int Read = 0
+  @config property int Write = 0
+
+
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() ) 
+      return
+
+	Sys.out.print("Sedona app Started!\n")
+
+    return
+  }
+
+
+  override void changed(Slot slot)
+  {
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+    // If I2cAccess.Write changes, write the value to i2c bus i.e to arduino slave.
+    if (slot == I2cAccess.Write)
+	{
+	Sys.out.print("\"I2cAccess.Write\" is changed !\n")
+	I2cDev.doI2cWrite(Write)
+	}
+
+  }
+
+
+ virtual override void execute()
+{
+	Read := I2cDev.doI2cRead()
+}
+
+
+}

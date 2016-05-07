@@ -32,8 +32,8 @@
 
   <!-- RPi GPIO kit -->
   <depend on="rpiDigitalIo 1.2" />
-
   <depend on="BACnet 1.2" />
+  <depend on="i2c 1.2" />
 
 
 </sedonaCode>

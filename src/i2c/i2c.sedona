@@ -1,0 +1,21 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   30 Apr 16  Titus   creation
+//
+
+class I2cDev
+{
+
+  //////////////////////////////////////////////////////////////////////////
+  // Native methods
+  //////////////////////////////////////////////////////////////////////////
+
+  native static int doI2cInit()
+  native static int doI2cRead()
+  native static int doI2cWrite(int val)
+
+}
+

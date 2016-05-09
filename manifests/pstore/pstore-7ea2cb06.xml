@@ -1,0 +1,86 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="pstore"
+   checksum="7ea2cb06"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Persistent random access, block storage for app data"
+   buildHost="tie2e"
+   buildTime="2016-05-09T14:15:27.740+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- pstore::PstoreFile -->
+<type id="0" name="PstoreFile" sizeof="56" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/file.png"/>
+  </facets>
+  <slot id="0" name="status" type="byte" default="1">
+    <facets>
+      <str name="range" val="ok, inactive, badParent, serviceErr, badOffset, badSize, dupRange, formatErr"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="resvOffset" type="int" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="resvSize" type="int" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- pstore::PstoreService -->
+<type id="1" name="PstoreService" sizeof="152" base="sys::Service">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/database.png"/>
+  </facets>
+  <slot id="0" name="filename" type="sys::Buf" flags="cs" default="data.pstore">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="32"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="fileSize" type="int" flags="c" default="32768">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="size" type="int" default="0">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="validateAll" type="void" flags="a"/>
+</type>
+
+<!-- pstore::TestPstoreFile -->
+<type id="2" name="TestPstoreFile" sizeof="60" base="pstore::PstoreFile">
+  <facets>
+    <bool name="testonly" val="true"/>
+  </facets>
+  <slot id="0" name="result" type="int"/>
+  <slot id="1" name="verifyOwner" type="void" flags="a"/>
+  <slot id="2" name="verifyClaim" type="void" flags="a"/>
+  <slot id="3" name="verifyTell" type="void" flags="a"/>
+  <slot id="4" name="verifySeek" type="int" flags="a"/>
+  <slot id="5" name="verifyRead" type="void" flags="a"/>
+  <slot id="6" name="verifyWrite" type="int" flags="a"/>
+  <slot id="7" name="verifyReadS4" type="void" flags="a"/>
+  <slot id="8" name="verifyWriteI4" type="int" flags="a"/>
+</type>
+
+</kitManifest>

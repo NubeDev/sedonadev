@@ -1,0 +1,23 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="platUnix"
+   checksum="751711ab"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Platform support for Unix based devices"
+   buildHost="tie2e"
+   buildTime="2016-05-09T14:15:27.877+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.0+"/>
+</depends>
+
+<!-- platUnix::UnixPlatformService -->
+<type id="0" name="UnixPlatformService" sizeof="204" base="sys::PlatformService">
+</type>
+
+</kitManifest>

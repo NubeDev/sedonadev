@@ -1,0 +1,131 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="timing"
+   checksum="aeaac82a"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Timing function block library"
+   buildHost="tie2e"
+   buildTime="2016-05-09T14:15:28.170+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- timing::DlyOff -->
+<type id="0" name="DlyOff" sizeof="56" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/control.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="bool"/>
+  <slot id="2" name="delayTime" type="float" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+      <str name="unit" val="second"/>
+    </facets>
+  </slot>
+  <slot id="3" name="hold" type="int">
+    <facets>
+      <str name="unit" val="millisecond"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- timing::DlyOn -->
+<type id="1" name="DlyOn" sizeof="56" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/control.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="bool"/>
+  <slot id="2" name="delayTime" type="float" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+      <str name="unit" val="second"/>
+    </facets>
+  </slot>
+  <slot id="3" name="hold" type="int">
+    <facets>
+      <str name="unit" val="millisecond"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- timing::OneShot -->
+<type id="2" name="OneShot" sizeof="60" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/control.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="bool"/>
+  <slot id="2" name="pulseWidth" type="float" flags="c">
+    <facets>
+      <int name="min" val="0"/>
+      <bool name="config" val="true"/>
+      <str name="unit" val="second"/>
+    </facets>
+  </slot>
+  <slot id="3" name="canRetrig" type="bool" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="clear" type="void" flags="a"/>
+</type>
+
+<!-- timing::Timer -->
+<type id="3" name="Timer" sizeof="64" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/clock.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="run" type="bool">
+    <facets>
+      <str name="falseText" val="stop"/>
+      <str name="trueText" val="run"/>
+    </facets>
+  </slot>
+  <slot id="2" name="time" type="int" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+      <str name="unit" val="second"/>
+    </facets>
+  </slot>
+  <slot id="3" name="left" type="int">
+    <facets>
+      <bool name="summary" val="true"/>
+      <str name="unit" val="second"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="resetTimer" type="void" flags="a"/>
+  <slot id="5" name="startTimer" type="void" flags="a"/>
+</type>
+
+</kitManifest>

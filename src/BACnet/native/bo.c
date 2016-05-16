@@ -56,6 +56,8 @@ volatile static unsigned int priority_bkp = 0; // pri level comes from sedona (s
 volatile static unsigned int priority_act = 255; //default value
 //volatile static unsigned int object_index = 0; // pri level comes from sedona (so taking backup for the next step)
 
+static int ov_instance = -1;
+static int level2_bo_new = 0;
 
 //make it global
 static unsigned int object_index = 0;//TODO: whether we can use this as static
@@ -440,12 +442,14 @@ BACNET_BINARY_PV level = BINARY_NULL;
             if (value.tag == BACNET_APPLICATION_TAG_ENUMERATED) {
                 priority = wp_data->priority;
 
-//	printf("################ PRIORITY %d ################### \n",priority);
+
 
 		override_en=0;//clearing the flag; wp_data->priority is the priority from BDT and it is BOSS for level 1 to 9 priority.
 		if(priority < priority_sae)
 		{
-//	printf("################ OVERRIDE!!! ################### \n");
+//	printf("################ OVERRIDE occured for instance %d!!! ################### \n",wp_data->object_instance);
+		ov_instance = wp_data->object_instance;
+
 		override_en=1;
 		}
 
@@ -550,9 +554,34 @@ BACNET_BINARY_PV level = BINARY_NULL;
     return status;
 }
 
+/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
+BACnet_BACnetDev_doBacnetBOOverrideInst(SedonaVM* vm, Cell* params)
+{
+
+	return ov_instance;
+
+}
+
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-Cell BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
+Cell BACnet_BACnetDev_doBacnetBOValueStatus2(SedonaVM* vm, Cell* params)
+{
+
+//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus2: params[0].ival : %d\n",params[0].ival);
+
+
+	level2_bo_new = Analog_Output_Present_Value(params[0].ival);
+
+	Cell result;
+	result.ival = level2_bo_new;
+	return result;
+
+}
+
+
+
+/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
+Cell BACnet_BACnetDev_doBacnetBOValueStatus(SedonaVM* vm, Cell* params)
 {
 
 
@@ -567,7 +596,7 @@ Cell BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return to sedona what BDT gives (the GPIO no will be returned) */
-BACnet_BACnetDev_doBacnetPriorityStatus(SedonaVM* vm, Cell* params)
+BACnet_BACnetDev_doBacnetBOPriorityStatus(SedonaVM* vm, Cell* params)
 {
 	priority_sae = params[0].ival;
 	priority_change = params[1].ival;
@@ -575,11 +604,13 @@ BACnet_BACnetDev_doBacnetPriorityStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return if override happens */
-BACnet_BACnetDev_doBacnetOverrideStatus(SedonaVM* vm, Cell* params)
+BACnet_BACnetDev_doBacnetBOOverrideStatus(SedonaVM* vm, Cell* params)
 {
 
 	override_en_bkp = override_en;//backup the override event.
 	override_en = 0;//clear out override event.
+
+	ov_instance = -1;
 
 //    printf("BACnet_BACnetDev_doBacnetOverrideStatus: level2 : %d  override_en : %d  object_index %d priority %d \n",level2,override_en,object_index,priority);
 
@@ -587,15 +618,22 @@ BACnet_BACnetDev_doBacnetOverrideStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetValueUpdate(SedonaVM* vm, Cell* params)
+BACnet_BACnetDev_doBacnetBOValueUpdate(SedonaVM* vm, Cell* params)
 {
 
 	object_index = params[2].ival;//ObjectID
 
 	if(dummy == 0)
 	{
+	int i=0;
+	printf("BO initialize is done!\n");
 	dummy++;
 	priority_act = 9;//default priority (@10)
+
+	for(i=0;i<5;i++)
+	Binary_Output_Level[i][9] = 0;//Init all the 5 objects
+
+
 	}
 
 	if(params[1].ival) {

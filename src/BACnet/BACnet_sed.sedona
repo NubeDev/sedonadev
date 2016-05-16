@@ -14,10 +14,10 @@ class BACnetDev
   //////////////////////////////////////////////////////////////////////////
 
   native static int doBacnetInit()
-  native static int doBacnetValueStatus()
-  native static int doBacnetPriorityStatus(int priority, bool pri_change)
-  native static int doBacnetOverrideStatus()
-  native static int doBacnetValueUpdate(bool sedona_level, bool In_change, int objectID)
+  native static int doBacnetBOValueStatus()
+  native static int doBacnetBOPriorityStatus(int priority, bool pri_change)
+  native static int doBacnetBOOverrideStatus()
+  native static int doBacnetBOValueUpdate(bool sedona_level, bool In_change, int objectID)
   native static int doBacnetInitStatus()
 
 
@@ -27,9 +27,8 @@ class BACnetDev
   native static int doBacnetAOValueUpdate(float sedona_level, bool In_change, int objectID)
 
   native static float doBacnetAOValueStatus2(int instance)
-  native static int doBacnetOverrideInst()
-  native static int doBacnetInit2(int whichObjectID)
-
-
+  native static int doBacnetAOOverrideInst()
+  native static int doBacnetBOValueStatus2(int instance)
+  native static int doBacnetBOOverrideInst()
 }
 

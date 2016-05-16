@@ -36,27 +36,6 @@ virtual void loaded()
       return
 
 	Sys.out.print("$name App Started!\n")
-
-
-/*
-if (name.equals("BACnetA"))
-inst = 1
-
-if (name.equals("BACnet1"))
-inst = 2
-
-if (name.equals("BACnet2"))
-inst = 3
-
-if (name.equals("BACnet3"))
-inst = 4
-
-if (name.equals("BACnet4"))
-inst = 5
-*/
-
-//    isInit = init( ObjectID )
-
    return
 
   }
@@ -102,94 +81,11 @@ inst = 5
 
 	}
 
-
-/*
-    super.changed(slot)
-
-    // Don't respond to prop changes while app is loading
-    if (!Sys.app.isRunning()) return
-
-    // If DIO# changes, re-init the DIO
-    if (slot == BACnetAO.ObjectID)
-      isInit = false
-
-*/
   }
 
-
-/*
-  public bool init(int ObjectIDdio )
-  {
-    ObjectID := ObjectIDdio
-
-    return BACnetDev.doBacnetInit2( ObjectID ) >= 0
-  }
-*/
 
  virtual override void execute()
   {
-
-
-//Sys.out.print("SEDONA: PROBE 1 override_en -> $override_en \n")
-
-
-
-//	Sys.out.print("$name Sedona app BACnetAO is executed\n")
-
-
-/*
-    // If not yet initialized, do that first
-    if (!isInit) 
-    {
-      start()
-      return
-    }
-*/
-
-//Sys.out.print("SEDONA: $ObjectID \n")
-
-
-/*
-if(count == 1)
-{
-
-if(inst == 1)
-ObjectID := 0
-
-if(inst == 2)
-ObjectID := 1
-
-if(inst == 3)
-ObjectID := 2
-
-if(inst == 4)
-ObjectID := 3
-
-if(inst == 5)
-ObjectID := 4
-
-count++;
-
-}
-*/
-
-
-
-
-
-/*
-ret3 = BACnetDev.doBacnetInitStatus()
-
-//ret = BACnetDev.doBacnetAOValueStatus()
-
-ret = BACnetDev.doBacnetAOValueStatus2(ObjectID)
-
-override_en = BACnetDev.doBacnetAOOverrideStatus()
-
-Sys.out.print("SEDONA: ObjectID -> $ObjectID ; Val -> $ret\n") 
-
-Out := ret
-*/
 
 ret3 = BACnetDev.doBacnetInitStatus()
 
@@ -197,7 +93,7 @@ ret3 = BACnetDev.doBacnetInitStatus()
 //God's Fix
 ret = BACnetDev.doBacnetAOValueStatus2(ObjectID)
 
-ret4 = BACnetDev.doBacnetOverrideInst()
+ret4 = BACnetDev.doBacnetAOOverrideInst()
 
 
 //arr[ret4] = 0

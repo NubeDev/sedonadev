@@ -608,7 +608,7 @@ Cell BACnet_BACnetDev_doBacnetAOValueStatus2(SedonaVM* vm, Cell* params)
 
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetOverrideInst(SedonaVM* vm, Cell* params)
+BACnet_BACnetDev_doBacnetAOOverrideInst(SedonaVM* vm, Cell* params)
 {
 
 	return ov_instance;
@@ -691,34 +691,6 @@ BACnet_BACnetDev_doBacnetAOValueUpdate(SedonaVM* vm, Cell* params)
 	Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
 
 	}
-}
-
-#define NUM_OF_IDS 4
-static int allowedIDs[NUM_OF_IDS] = { 0, 1, 2, 3};
-
-bool isValidID(int which)
-{
-  int g;
-  for (g=0; g<NUM_OF_IDS; g++)
-    if (which == allowedIDs[g]) return TRUE;
-  return FALSE;
-}
-
-
-
-Cell BACnet_BACnetDev_doBacnetInit2(SedonaVM* vm, Cell* params)
-{
-
-  int ID = params[0].ival;
-
-  //
-  // Check for invalid DIO
-  //
-  if ( !isValidID(ID) )
-    return negOneCell;
-  else
-    return zeroCell;		
-
 }
 
 

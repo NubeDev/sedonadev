@@ -512,16 +512,19 @@ bool Analog_Output_Write_Property(
                    algorithm and may not be used for other purposes in any
                    object. */
 
-//                status =
-//                    Analog_Output_Present_Value_Set(wp_data->object_instance,
-//                    value.type.Real, wp_data->priority);
 			if(override_en_ao == 1)
 			{
 //		printf("################ Updating the level in BDT as we received override; object_index %d priority %d value.type.Real %f ################### \n",object_index,priority,value.type.Real);
 //                    Binary_Output_Level[object_index][priority] = level;
 
+//Titus: Issue fixed
+//                    Analog_Output_Present_Value_Set(wp_data->object_instance,
+//                    value.type.Real, wp_data->priority);
+
+                status =
                     Analog_Output_Present_Value_Set(wp_data->object_instance,
                     value.type.Real, wp_data->priority);
+
 			}
 
                 if (wp_data->priority == 6) {

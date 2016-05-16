@@ -18,17 +18,22 @@
   <source dir="."/>
 
   <!-- Natives -->  
-  <native qname="BACnet::BACnetDev.doBacnetInit"                 id="85::0" />
-  <native qname="BACnet::BACnetDev.doBacnetValueStatus"          id="85::1" />
-  <native qname="BACnet::BACnetDev.doBacnetPriorityStatus"       id="85::2" />
-  <native qname="BACnet::BACnetDev.doBacnetOverrideStatus"       id="85::3" />
-  <native qname="BACnet::BACnetDev.doBacnetValueUpdate"          id="85::4" />
-  <native qname="BACnet::BACnetDev.doBacnetInitStatus"           id="85::5" />
+  <native qname="BACnet::BACnetDev.doBacnetInit"                   id="85::0" />
+  <native qname="BACnet::BACnetDev.doBacnetValueStatus"            id="85::1" />
+  <native qname="BACnet::BACnetDev.doBacnetPriorityStatus"         id="85::2" />
+  <native qname="BACnet::BACnetDev.doBacnetOverrideStatus"         id="85::3" />
+  <native qname="BACnet::BACnetDev.doBacnetValueUpdate"            id="85::4" />
+  <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::5" />
 
   <native qname="BACnet::BACnetDev.doBacnetAOValueStatus"          id="85::6" />
   <native qname="BACnet::BACnetDev.doBacnetAOPriorityStatus"       id="85::7" />
   <native qname="BACnet::BACnetDev.doBacnetAOOverrideStatus"       id="85::8" />
   <native qname="BACnet::BACnetDev.doBacnetAOValueUpdate"          id="85::9" />
+
+  <native qname="BACnet::BACnetDev.doBacnetInit2"                  id="85::10" />
+
+  <native qname="BACnet::BACnetDev.doBacnetAOValueStatus2"         id="85::11" />
+  <native qname="BACnet::BACnetDev.doBacnetOverrideInst"           id="85::12" />
 
 </sedonaKit>
 

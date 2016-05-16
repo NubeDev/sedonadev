@@ -25,7 +25,10 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-#define MAX_BINARY_OUTPUTS 4
+//Titus
+#define MAX_BINARY_OUTPUTS 5
+#define MAX_ANALOG_OUTPUTS 5
+#define MAX_ANALOG_VALUES 5
 
 /* Note: these defines can be defined in your makefile or project
    or here or not defined and defaults will be used */

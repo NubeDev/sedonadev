@@ -39,6 +39,9 @@ class DioIn
   **
   virtual override void start()
   {
+
+//Sys.out.print("SEDONA: STARTED!\n")
+
     // Don't touch hardware until input value is valid
     if ( !Sys.app.isSteadyState() ) 
       return                     
@@ -62,7 +65,9 @@ class DioIn
       return
     }
 
-    int rc = read()    
+    int rc = read()
+
+Sys.out.print("SEDONA: dioNum -> $dioNum ; rc -> $rc\n") 
 
     if (rc<0) 
       out := null

@@ -71,11 +71,7 @@ if (write(file,buf,1) != 1) {
 /* ERROR HANDLING: i2c transaction failed */
 printf("Titus : Failed to write to the i2c bus\n");
 //exit(1);
-<<<<<<< HEAD
 return -1;
-=======
-	return -1;
->>>>>>> multipleAO
 printf("\n\n");
 	}
 
@@ -92,13 +88,8 @@ i2c_I2cDev_doI2cRead(SedonaVM* vm, Cell* params)
 	if (read(file,buf,1) != 1) {
 	/* ERROR HANDLING: i2c transaction failed */
 	printf("Titus : Failed to read from the i2c bus\n");
-<<<<<<< HEAD
 	return -1;
 //	exit(1);
-=======
-//	exit(1);
-	return -1;
->>>>>>> multipleAO
 	printf("\n\n");
 		}
 	 }

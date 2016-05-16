@@ -37,14 +37,16 @@ i2c_I2cDev_doI2cInit(SedonaVM* vm, Cell* params)
 	if ((file = open(filename,O_RDWR)) < 0) {
 	printf("Titus : Failed to open the bus.\n");
 	/* ERROR HANDLING; you can check errno to see what went wrong */
-	exit(1);
+//	exit(1);
+	return -1;
 		}
 
 	//I2C IOCTL
 	if (ioctl(file,I2C_SLAVE,addr) < 0) {
 	printf("Titus : Failed to acquire bus access and/or talk to slave.\n");
 	/* ERROR HANDLING; you can check errno to see what went wrong */
-	exit(1);
+//	exit(1);
+	return -1;
 		}
 
 	}
@@ -69,7 +71,11 @@ if (write(file,buf,1) != 1) {
 /* ERROR HANDLING: i2c transaction failed */
 printf("Titus : Failed to write to the i2c bus\n");
 //exit(1);
+<<<<<<< HEAD
 return -1;
+=======
+	return -1;
+>>>>>>> multipleAO
 printf("\n\n");
 	}
 
@@ -81,18 +87,23 @@ i2c_I2cDev_doI2cRead(SedonaVM* vm, Cell* params)
 
 	if(read_status_sensor)
 	{
-	printf("Titus : I2C READ Enabled for sensor\n");
+//	printf("Titus : I2C READ Enabled for sensor\n");
 	//I2C READ
 	if (read(file,buf,1) != 1) {
 	/* ERROR HANDLING: i2c transaction failed */
 	printf("Titus : Failed to read from the i2c bus\n");
+<<<<<<< HEAD
 	return -1;
 //	exit(1);
+=======
+//	exit(1);
+	return -1;
+>>>>>>> multipleAO
 	printf("\n\n");
 		}
 	 }
 
-printf("Titus : read from the i2c bus, value %d\n",buf[0]);
+//printf("Titus : read from the i2c bus, value %d\n",buf[0]);
 return buf[0];
 
 }
@@ -113,7 +124,8 @@ i2c_I2cDev_doI2cSensorRead(SedonaVM* vm, Cell* params)
 	if (read(file,buf,1) != 1) {
 	/* ERROR HANDLING: i2c transaction failed */
 	printf("Titus : Failed to read from the i2c bus\n");
-	exit(1);
+//	exit(1);
+	return -1;
 	printf("\n\n");
 		}
 	 }

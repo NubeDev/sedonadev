@@ -552,11 +552,18 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
+Cell BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
 {
 
+
 //    printf("BACnet_BACnetDev_doBacnetValueStatus: Value : %d  override_en : %d \n",level2,override_en);
-	return level2;
+//	return level2;
+	if(level2 == 0)
+	return zeroCell;
+
+	if(level2 == 1)
+	return oneCell;
+
 }
 
 /* Titus : return to sedona what BDT gives (the GPIO no will be returned) */

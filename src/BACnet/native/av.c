@@ -511,6 +511,10 @@ bool Analog_Value_Write_Property(
     /* FIXME: len < application_data_len: more data? */
     if (len < 0) {
         /* error while decoding - a value larger than we can handle */
+
+	printf("BACNET AV: PROBE1 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
+
         wp_data->error_class = ERROR_CLASS_PROPERTY;
         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
         return false;
@@ -559,17 +563,21 @@ bool Analog_Value_Write_Property(
                     status = true;
 
 */
-                } else if (wp_data->priority == 6) {
+//                } else if (wp_data->priority == 6) {
+                } if (wp_data->priority == 6) {
                     /* Command priority 6 is reserved for use by Minimum On/Off
                        algorithm and may not be used for other purposes in any
                        object. */
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_WRITE_ACCESS_DENIED;
                 } else {
+	printf("BACNET AV: PROBE2 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                 }
             } else {
+	printf("BACNET AV: PROBE3 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
                 status = false;
                 wp_data->error_class = ERROR_CLASS_PROPERTY;
                 wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
@@ -1248,7 +1256,7 @@ int Analog_Value_Alarm_Summary(
 /* Titus : return the instance or ObjectID to Sedona for which is received override event */
 Cell BACnet_BACnetDev_doBacnetAVValueStatus(SedonaVM* vm, Cell* params)
 {
-//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus2: params[0].ival : %d\n",params[0].ival);
+//    printf("BACnet_BACnetDev_doBacnetAVValueStatus: params[0].ival : %d\n",params[0].ival);
 	Cell result;
 	level2_ao_new = Analog_Value_Present_Value(params[0].ival);
 	result.fval = level2_ao_new;
@@ -1282,21 +1290,26 @@ BACnet_BACnetDev_doBacnetAVOverrideStatus(SedonaVM* vm, Cell* params)
 /* Titus : Initialize the BACnet objects and update the value in BACnet what Sedona writes */
 BACnet_BACnetDev_doBacnetAVValueUpdate(SedonaVM* vm, Cell* params)
 {
-	object_index = params[2].ival;//ObjectID
+	object_index = params[2].ival;	//Getting ObjectID from Sedona
 	if(dummy_ao == 0)
 	{
 	int i=0;
-	printf("AO initialize is done!\n");
+	printf("AV initialize is done!\n");
 	dummy_ao++;
-	priority_act_ao = 9;//default priority (@10)
-//	Analog_Output_Level[object_index][--priority_sae_ao] = params[0].fval;//Float Value updating in BDT
-//	for(i=0;i<5;i++)
-//	Analog_Output_Level[i][9] = 0.0;//Init all the 5 objects
+	priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10) but in array point of view, 0 to 9
+
+//Titus: Init all the objects
+	for(i=0;i<MAX_ANALOG_OUTPUTS;i++)
+	Analog_Value_Present_Value_Set(i,\
+                        0.0, DEF_SEDONA_PRIORITY);
 	}
 
 	if(params[1].ival) {
-//	printf("################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %f\n",object_index,priority_act_ao,params[0].fval);
-//	Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
+	printf("BACnet_BACnetDev_doBacnetAVValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f\n",object_index,priority_act_ao,params[0].fval);
+
+//Titus : Float Value updating in BACnet server via BDT
+	Analog_Value_Present_Value_Set(object_index,\
+                        params[0].fval, priority_act_ao);
 	}
 }
 

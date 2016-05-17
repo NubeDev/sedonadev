@@ -455,7 +455,7 @@ bool Analog_Output_Write_Property(
         /* error while decoding - a value larger than we can handle */
         wp_data->error_class = ERROR_CLASS_PROPERTY;
         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
-	printf("BACNET: PROBE1 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE1 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
         return false;
     }
     /*  only array properties can have array options */
@@ -505,7 +505,8 @@ bool Analog_Output_Write_Property(
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_WRITE_ACCESS_DENIED;
                 } else if (!status) {
-	printf("BACNET: PROBE2 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE2 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                 }
@@ -521,7 +522,8 @@ bool Analog_Output_Write_Property(
                         Analog_Output_Present_Value_Relinquish
                         (wp_data->object_instance, wp_data->priority);
                     if (!status) {
-	printf("BACNET: PROBE3 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE3 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
                         wp_data->error_class = ERROR_CLASS_PROPERTY;
                         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                     }

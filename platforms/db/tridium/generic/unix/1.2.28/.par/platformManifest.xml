@@ -104,19 +104,22 @@
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doSetClock" id="9::1" />
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doGetUtcOffset" id="9::2" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetInit" id="85::0" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOValueStatus" id="85::1" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOPriorityStatus" id="85::2" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOOverrideStatus" id="85::3" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOValueUpdate" id="85::4" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetInitStatus" id="85::5" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueStatus" id="85::6" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOPriorityStatus" id="85::7" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOOverrideStatus" id="85::8" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueUpdate" id="85::9" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueStatus2" id="85::10" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetInitStatus" id="85::1" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOValueStatus" id="85::2" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOPriorityStatus" id="85::3" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOOverrideStatus" id="85::4" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOValueUpdate" id="85::5" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOOverrideInst" id="85::6" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueStatus" id="85::7" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOPriorityStatus" id="85::8" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOOverrideStatus" id="85::9" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOValueUpdate" id="85::10" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOOverrideInst" id="85::11" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOValueStatus2" id="85::12" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOOverrideInst" id="85::13" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVValueStatus" id="85::12" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVPriorityStatus" id="85::13" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVOverrideStatus" id="85::14" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVValueUpdate" id="85::15" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVOverrideInst" id="85::16" />
   <nativeMethod qname="i2c::I2cDev.doI2cInit" id="86::0" />
   <nativeMethod qname="i2c::I2cDev.doI2cExit" id="86::1" />
   <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />

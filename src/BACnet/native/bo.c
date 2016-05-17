@@ -28,9 +28,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include "bacdef.h"
 #include "bacdcode.h"
 #include "bacenum.h"
@@ -40,10 +38,6 @@
 #include "wp.h"
 #include "bo.h"
 #include "handlers.h"
-
-#include "gpio.h"
-
-int bo2gpio[MAX_BINARY_OUTPUTS]={5, 6, 13, 2};  //Titus : Modified for rPi2
 
 #include "sedona.h"
 
@@ -195,22 +189,22 @@ BACNET_BINARY_PV Binary_Output_Present_Value(
     unsigned index = 0;
     unsigned i = 0;
 
-//printf("OVERRIDE STATUS override_en %d override_en_bkp %d Binary_Output_Level[0][9] %d  value %d\n",override_en,override_en_bkp,Binary_Output_Level[0][9], value);
+//printf("Binary_Output_Present_Value: OVERRIDE STATUS override_en %d override_en_bkp %d Binary_Output_Level[0][9] %d  value %d\n",override_en,override_en_bkp,Binary_Output_Level[0][9], value);
 
     index = Binary_Output_Instance_To_Index(object_instance);
 
     if (index < MAX_BINARY_OUTPUTS) {
         for (i = 0; i < BACNET_MAX_PRIORITY; i++) {
 	 priority_act = i;
-//	printf("index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+//	printf("Binary_Output_Present_Value: index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
             if (Binary_Output_Level[index][i] != BINARY_NULL) {
                 value = Binary_Output_Level[index][i];
-//	printf("SUCCESSFUL index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+//	printf("Binary_Output_Present_Value: index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
 
-	//updating the "level2" var to sending the value to SAE.
+	//Titus : updating the "level2" variable to sending the value to SAE (Sedona Application Editor).
 	level2 = value;
 
-//	printf("VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
+//	printf("Binary_Output_Present_Value: VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
                 break;
             }
         }
@@ -293,7 +287,7 @@ int Binary_Output_Read_Property(
            present_value =
                 Binary_Output_Present_Value(rpdata->object_instance);
 
-//	printf("present_value %d rpdata->object_instance %d \n",present_value,rpdata->object_instance);
+//	printf("Binary_Output_Read_Property: present_value %d rpdata->object_instance %d \n",present_value,rpdata->object_instance);
 
             apdu_len = encode_application_enumerated(&apdu[0], present_value);
             break;
@@ -409,7 +403,7 @@ bool Binary_Output_Write_Property(
 {
     bool status = false;        /* return value */
 
-//done as global
+//Titus : Declared as global
 //    unsigned int object_index = 0;
 //    unsigned int priority = 0;
 BACNET_BINARY_PV level = BINARY_NULL;
@@ -444,10 +438,10 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 
 
-		override_en=0;//clearing the flag; wp_data->priority is the priority from BDT and it is BOSS for level 1 to 9 priority.
+		override_en=0;//Titus: clearing the flag; wp_data->priority is the priority from BDT and it is BOSS for level 1 to 9 priority.
 		if(priority < priority_sae)
 		{
-//	printf("################ OVERRIDE occured for instance %d!!! ################### \n",wp_data->object_instance);
+//	printf("Binary_Output_Write_Property: OVERRIDE occured for instance %d!!! \n",wp_data->object_instance);
 		ov_instance = wp_data->object_instance;
 
 		override_en=1;
@@ -470,7 +464,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 			if(override_en == 1)
 			{
-		printf("################ Updating the level in BDT as we received override; object_index %d priority %d ################### \n",object_index,priority);
+//		printf("Binary_Output_Write_Property: Updating the level in BDT as we received override; object_index %d priority %d \n",object_index,priority);
                     Binary_Output_Level[object_index][priority] = level;
 			}
 
@@ -516,7 +510,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
                     }
                 }
             }
-		//this line is required & important to update the value
+		//Titus: Get the latest value and send to Sedona
 		level2 = Binary_Output_Present_Value(object_index);
 
             break;
@@ -554,48 +548,24 @@ BACNET_BINARY_PV level = BINARY_NULL;
     return status;
 }
 
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
+/* Titus : return the instance or ObjectID to Sedona for which is received override event */
 BACnet_BACnetDev_doBacnetBOOverrideInst(SedonaVM* vm, Cell* params)
 {
-
 	return ov_instance;
-
 }
 
-
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-Cell BACnet_BACnetDev_doBacnetBOValueStatus2(SedonaVM* vm, Cell* params)
+/* Titus : return the particular ObjectID current value to Sedona */
+Cell BACnet_BACnetDev_doBacnetBOValueStatus(SedonaVM* vm, Cell* params)
 {
-
-//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus2: params[0].ival : %d\n",params[0].ival);
-
-
-	level2_bo_new = Analog_Output_Present_Value(params[0].ival);
-
 	Cell result;
+//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus: params[0].ival : %d\n",params[0].ival);
+	level2_bo_new = Analog_Output_Present_Value(params[0].ival);
 	result.ival = level2_bo_new;
 	return result;
 
 }
 
-
-
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-Cell BACnet_BACnetDev_doBacnetBOValueStatus(SedonaVM* vm, Cell* params)
-{
-
-
-//    printf("BACnet_BACnetDev_doBacnetValueStatus: Value : %d  override_en : %d \n",level2,override_en);
-//	return level2;
-	if(level2 == 0)
-	return zeroCell;
-
-	if(level2 == 1)
-	return oneCell;
-
-}
-
-/* Titus : return to sedona what BDT gives (the GPIO no will be returned) */
+/* Titus : return the actual priority used in BDT (BACnet discovery device) tool to Sedona */
 BACnet_BACnetDev_doBacnetBOPriorityStatus(SedonaVM* vm, Cell* params)
 {
 	priority_sae = params[0].ival;
@@ -603,41 +573,35 @@ BACnet_BACnetDev_doBacnetBOPriorityStatus(SedonaVM* vm, Cell* params)
 	return priority_act;
 }
 
-/* Titus : return if override happens */
+/* Titus : return the override event */
 BACnet_BACnetDev_doBacnetBOOverrideStatus(SedonaVM* vm, Cell* params)
 {
-
-	override_en_bkp = override_en;//backup the override event.
-	override_en = 0;//clear out override event.
-
-	ov_instance = -1;
-
+	override_en_bkp = override_en;	//backup the override event.
 //    printf("BACnet_BACnetDev_doBacnetOverrideStatus: level2 : %d  override_en : %d  object_index %d priority %d \n",level2,override_en,object_index,priority);
 
+	override_en = 0;	//clear out override event.
+	ov_instance = -1;	//clear out instance.
 	return override_en_bkp;
 }
 
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
+/* Titus : Initialize the BACnet objects and update the value in BACnet what Sedona writes */
 BACnet_BACnetDev_doBacnetBOValueUpdate(SedonaVM* vm, Cell* params)
 {
-
-	object_index = params[2].ival;//ObjectID
+	object_index = params[2].ival;// getting ObjectID (index or instance) from Sedona
 
 	if(dummy == 0)
 	{
 	int i=0;
-	printf("BO initialize is done!\n");
+	printf("BACnet_BACnetDev_doBacnetBOValueUpdate: BO initialize is done!\n");
 	dummy++;
-	priority_act = 9;//default priority (@10)
+	priority_act = DEF_SEDONA_PRIORITY;//default priority (@10 BDT)
 
-	for(i=0;i<5;i++)
-	Binary_Output_Level[i][9] = 0;//Init all the 5 objects
-
-
+	for(i=0;i<MAX_BINARY_OUTPUTS;i++)
+	Binary_Output_Level[i][DEF_SEDONA_PRIORITY] = 0;//Init all the 5 objects
 	}
 
 	if(params[1].ival) {
-//	printf("################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %d \n",object_index,priority_act,params[0].ival);
+//	printf("BACnet_BACnetDev_doBacnetBOValueUpdate: ################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %d \n",object_index,priority_act,params[0].ival);
 	Binary_Output_Level[object_index][priority_act] = params[0].ival;//Value updating in BDT
 	}
 

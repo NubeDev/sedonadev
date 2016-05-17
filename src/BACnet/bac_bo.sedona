@@ -70,8 +70,7 @@ virtual void loaded()
 
 ret3 = BACnetDev.doBacnetInitStatus()
 
-//ret = BACnetDev.doBacnetBOValueStatus()
-ret = BACnetDev.doBacnetBOValueStatus2(ObjectID)
+ret = BACnetDev.doBacnetBOValueStatus(ObjectID)
 
 ret4 = BACnetDev.doBacnetBOOverrideInst()
 

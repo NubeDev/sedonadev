@@ -551,12 +551,12 @@ bool Analog_Value_Write_Property(
                    algorithm and may not be used for other purposes in any
                    object. */
 
+                    status = true;
+
 			if(override_en_ao == 1)
 			{
 			Analog_Value_Present_Value_Set(wp_data->object_instance,
                         value.type.Real, wp_data->priority);
-
-                    status = true;
 /*
                 if (Analog_Value_Present_Value_Set(wp_data->object_instance,
                         value.type.Real, wp_data->priority)) {
@@ -564,13 +564,16 @@ bool Analog_Value_Write_Property(
 
 */
 //                } else if (wp_data->priority == 6) {
+
                 } if (wp_data->priority == 6) {
                     /* Command priority 6 is reserved for use by Minimum On/Off
                        algorithm and may not be used for other purposes in any
                        object. */
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_WRITE_ACCESS_DENIED;
-                } else {
+//Titus: ao.c referred and modified
+//                } else {
+                } else if (!status) {
 	printf("BACNET AV: PROBE2 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
@@ -1291,10 +1294,13 @@ BACnet_BACnetDev_doBacnetAVOverrideStatus(SedonaVM* vm, Cell* params)
 BACnet_BACnetDev_doBacnetAVValueUpdate(SedonaVM* vm, Cell* params)
 {
 	object_index = params[2].ival;	//Getting ObjectID from Sedona
+
+//	printf("BACnet_BACnetDev_doBacnetAVValueUpdate: object_index %d , priority_act %d value %fparams[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
+
 	if(dummy_ao == 0)
 	{
 	int i=0;
-	printf("AV initialize is done!\n");
+	printf("BACnet_BACnetDev_doBacnetAVValueUpdate: AV initialize is done!\n");
 	dummy_ao++;
 	priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10) but in array point of view, 0 to 9
 
@@ -1305,7 +1311,7 @@ BACnet_BACnetDev_doBacnetAVValueUpdate(SedonaVM* vm, Cell* params)
 	}
 
 	if(params[1].ival) {
-	printf("BACnet_BACnetDev_doBacnetAVValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f\n",object_index,priority_act_ao,params[0].fval);
+//	printf("BACnet_BACnetDev_doBacnetAVValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %fparams[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
 
 //Titus : Float Value updating in BACnet server via BDT
 	Analog_Value_Present_Value_Set(object_index,\

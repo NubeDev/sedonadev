@@ -8,7 +8,6 @@
 
 class BACnetDev
 {
-
   //////////////////////////////////////////////////////////////////////////
   // Native methods
   //////////////////////////////////////////////////////////////////////////
@@ -33,5 +32,4 @@ class BACnetDev
   native static int doBacnetAVOverrideStatus()
   native static int doBacnetAVValueUpdate(float sedona_level, bool In_change, int objectID)
   native static int doBacnetAVOverrideInst()
-
 }

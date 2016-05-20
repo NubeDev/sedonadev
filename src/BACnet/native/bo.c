@@ -418,6 +418,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
         wp_data->application_data_len, &value);
     /* FIXME: len < application_data_len: more data? */
     if (len < 0) {
+	printf("BACNET BO: PROBE1 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
         /* error while decoding - a value larger than we can handle */
         wp_data->error_class = ERROR_CLASS_PROPERTY;
         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
@@ -441,7 +442,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
 		override_en=0;//Titus: clearing the flag; wp_data->priority is the priority from BDT and it is BOSS for level 1 to 9 priority.
 		if(priority < priority_sae)
 		{
-//	printf("Binary_Output_Write_Property: OVERRIDE occured for instance %d!!! \n",wp_data->object_instance);
+	printf("Binary_Output_Write_Property: OVERRIDE occured for instance %d!!! \n",wp_data->object_instance);
 		ov_instance = wp_data->object_instance;
 
 		override_en=1;
@@ -464,7 +465,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 			if(override_en == 1)
 			{
-//		printf("Binary_Output_Write_Property: Updating the level in BDT as we received override; object_index %d priority %d \n",object_index,priority);
+		printf("Binary_Output_Write_Property: Updating the level in BDT as we received override; object_index %d priority %d \n",object_index,priority);
                     Binary_Output_Level[object_index][priority] = level;
 			}
 
@@ -481,6 +482,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_WRITE_ACCESS_DENIED;
                 } else {
+	printf("BACNET BO: PROBE2 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                 }
@@ -504,6 +506,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
                            physical output.  This comment may apply to the
                            main loop (i.e. check out of service before changing output) */
                     } else {
+	printf("BACNET BO: PROBE3 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
                         status = false;
                         wp_data->error_class = ERROR_CLASS_PROPERTY;
                         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
@@ -558,10 +561,21 @@ BACnet_BACnetDev_doBacnetBOOverrideInst(SedonaVM* vm, Cell* params)
 Cell BACnet_BACnetDev_doBacnetBOValueStatus(SedonaVM* vm, Cell* params)
 {
 	Cell result;
-//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus: params[0].ival : %d\n",params[0].ival);
-	level2_bo_new = Analog_Output_Present_Value(params[0].ival);
+
+	level2_bo_new = Binary_Output_Present_Value(params[0].ival);
+
+//	if(level2_bo_new == 0)
+//	return zeroCell;
+
+//	if(level2_bo_new == 1)
+//	return oneCell;
+
 	result.ival = level2_bo_new;
+
+//    printf("BACNET: BACnet_BACnetDev_doBacnetBOValueStatus: ObjectID -> params[0].ival : %d result.ival %d level2_bo_new %d\n",params[0].ival,result.ival,level2_bo_new);
+
 	return result;
+
 
 }
 

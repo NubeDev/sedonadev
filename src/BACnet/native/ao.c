@@ -493,10 +493,9 @@ bool Analog_Output_Write_Property(
                 status =
                     Analog_Output_Present_Value_Set(wp_data->object_instance,
                     value.type.Real, wp_data->priority);
+			}
 
                     status = true;
-
-			}
 
                 if (wp_data->priority == 6) {
                     /* Command priority 6 is reserved for use by Minimum On/Off
@@ -606,10 +605,11 @@ BACnet_BACnetDev_doBacnetAOOverrideStatus(SedonaVM* vm, Cell* params)
 BACnet_BACnetDev_doBacnetAOValueUpdate(SedonaVM* vm, Cell* params)
 {
 	object_index = params[2].ival;//getting ObjectID from Sedona
+
 	if(dummy_ao == 0)
 	{
 	int i=0;
-	printf("AO initialize is done!\n");
+	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: AO initialize is done!\n");
 	dummy_ao++;
 	priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10)
 
@@ -618,7 +618,7 @@ BACnet_BACnetDev_doBacnetAOValueUpdate(SedonaVM* vm, Cell* params)
 	}
 
 	if(params[1].ival) {
-//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f\n",object_index,priority_act_ao,params[0].fval);
+//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
 	Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
 	}
 }

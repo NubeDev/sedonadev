@@ -18,7 +18,7 @@ class BACnetBO
   @config property int Priority = 10
   @config property bool In = false
   @readonly @allowNull property bool Out = false
-  @config property int ObjectID = 0
+  @config property int ObjectID = -1
 
 /*
 virtual void loaded()
@@ -26,47 +26,63 @@ virtual void loaded()
 
 }
 */
-
   virtual override void start()
   {
     // Don't touch hardware until input value is valid
     if ( !Sys.app.isSteadyState() ) 
       return
 
-	Sys.out.print("$name App Started!\n")
+	Sys.out.print("SEDONA: $name : \"BACnetBO\" App Started!\n")
 
     return
   }
 
-
   override void changed(Slot slot)
   {
+
     super.changed(slot)
 
     // Don't respond to prop changes while app is loading
     if (!Sys.app.isRunning()) return
 
     // If BACnetBO.In changes, clear the override and drive what IN has.
-    if (slot == BACnetBO.In)
+    if ( slot == BACnetBO.In )
 	{
 	false_bkp = false;
 	true_bkp = false;
-	In_change = true;
-	Sys.out.print("Override is cleared as \"BACnetBO.In\" is changed, so now, drive what \"BACnetBO.In\" has! ( please note that you can't write when BDT@1, need to write 'null' in BDT) \n")
+
+//Allow to write by Sedona continuously if no write happens in BDT @1
+	if ( ret2 != 0 )
+	ov = false;
+
+//Not allow to write by Sedona if BDT is written @1 (most higher priority)
+	if ( ret2 == 0 )
+	{
+//	Sys.out.print("########### $name SEDONA ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
+	Sys.out.print("SEDONA: $name: BACnetBO: ALERT!!!: Not allowed to write by Sedona if BDT is written @1, so pls make sure.  ###########\n")
+
+	ov = true;
 	}
 
 	//clear the event
 	ia[ObjectID] = -1;
+//	Sys.out.print("$name SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
+
+	In_change = true;
+	Sys.out.print("SEDONA:  $name: BACnetBO: Override is cleared as \"BACnetBO.In\" is changed, so now, drive what \"BACnetBO.In\" has! ( also please note that you can't control BOs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
 
 //latest fix
 	override_en = 0;
 
+	}
 
 
   }
 
  virtual override void execute()
   {
+
+//Sys.out.print("SEDONA: $name : \"BACnetBO\" App Executing...!\n") 
 
 ret3 = BACnetDev.doBacnetInitStatus()
 
@@ -79,7 +95,7 @@ ia[ret4] = 1;
 override_en = BACnetDev.doBacnetBOOverrideStatus()
 
 if (ret3 == 0)
-Sys.out.print("\"BACnetBO\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetBO\n")
+Sys.out.print("SEDONA: $name: BACnetBO: \"BACnetBO\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetBO\n")
 
 
 //overriding part
@@ -87,11 +103,12 @@ Sys.out.print("\"BACnetBO\" is enabled without enabling the \"BACnetInit\", plea
 if( ia[ObjectID] == 1 )
       {
 
-Sys.out.print("BDT is trying to write the \"BACnetBO.Out\" with higher priority (called override) !\n")
+//Sys.out.print("SEDONA: $name: BACnetBO: ObjectID $ObjectID ret4 $ret4 ret $ret BDT is trying to write the \"BACnetBO.Out\" with higher priority (called override) !\n")
 //Send out the data if override (priority is selected as per levels) happened
 if (ret == 1)
   {
 Out := true
+ov = true;
 true_bkp = true
 
 false_bkp = false
@@ -99,6 +116,7 @@ false_bkp = false
 else
   {
 Out := false
+ov = true;
 false_bkp = true
 
 true_bkp = false
@@ -115,7 +133,8 @@ if( false_bkp )
 Out := false
 
 //all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
-if ( (ret3 == 1) && (pri_bkp == false) && (false_bkp == false) && (true_bkp == false) && ( priority_max >= Priority ) )
+//if ( (ret3 == 1) && (pri_bkp == false) && (false_bkp == false) && (true_bkp == false) && ( priority_max >= Priority ) )
+if ( (ret3 == 1) && (ov == false) && (true_bkp == false) && ( priority_max >= Priority ) )
 {
 Out := In
 
@@ -126,16 +145,18 @@ In_change = false;
 
 if (Priority > 16)
 {
-Sys.out.print("Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
+
+Sys.out.print("SEDONA: $name: BACnetBO: Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
 Priority := 10
 }
 
 //Its for setting priority to BDT
 ret2 = BACnetDev.doBacnetBOPriorityStatus(Priority, pri_change)
 
+//Sys.out.print("Before Priority level is $ret2\n")
 //increaing the priority as its decreased for array priority store
-ret2++;
-//Sys.out.print("Priority level is $ret2\n")
+//ret2++;
+//Sys.out.print("After Priority level is $ret2\n")
 
 if ( ret2 != 1 )
 {
@@ -150,9 +171,9 @@ pri_bkp = true;
 }
   }
 
-
 //defining the local variables
-int override_en = 0;
+static int override_en = 0;
+bool ov = false;
 int ret = 0;
 int ret2 = 255;
 int ret3 = 0;
@@ -163,7 +184,5 @@ bool In_change = null;
 bool pri_change = null;
 bool pri_bkp = false;
 int ret4 = -1;
-
 inline static int[5] ia
-
 }

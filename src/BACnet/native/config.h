@@ -26,6 +26,7 @@
 #define CONFIG_H
 
 //Titus
+#define DEF_SEDONA_PRIORITY 9
 #define MAX_BINARY_OUTPUTS 5
 #define MAX_ANALOG_OUTPUTS 5
 #define MAX_ANALOG_VALUES 5

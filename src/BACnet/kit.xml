@@ -19,21 +19,25 @@
 
   <!-- Natives -->  
   <native qname="BACnet::BACnetDev.doBacnetInit"                   id="85::0" />
-  <native qname="BACnet::BACnetDev.doBacnetValueStatus"            id="85::1" />
-  <native qname="BACnet::BACnetDev.doBacnetPriorityStatus"         id="85::2" />
-  <native qname="BACnet::BACnetDev.doBacnetOverrideStatus"         id="85::3" />
-  <native qname="BACnet::BACnetDev.doBacnetValueUpdate"            id="85::4" />
-  <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::5" />
+  <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::1" />
 
-  <native qname="BACnet::BACnetDev.doBacnetAOValueStatus"          id="85::6" />
-  <native qname="BACnet::BACnetDev.doBacnetAOPriorityStatus"       id="85::7" />
-  <native qname="BACnet::BACnetDev.doBacnetAOOverrideStatus"       id="85::8" />
-  <native qname="BACnet::BACnetDev.doBacnetAOValueUpdate"          id="85::9" />
+  <native qname="BACnet::BACnetDev.doBacnetBOValueStatus"          id="85::2" />
+  <native qname="BACnet::BACnetDev.doBacnetBOPriorityStatus"       id="85::3" />
+  <native qname="BACnet::BACnetDev.doBacnetBOOverrideStatus"       id="85::4" />
+  <native qname="BACnet::BACnetDev.doBacnetBOValueUpdate"          id="85::5" />
+  <native qname="BACnet::BACnetDev.doBacnetBOOverrideInst"         id="85::6" />
 
-  <native qname="BACnet::BACnetDev.doBacnetInit2"                  id="85::10" />
+  <native qname="BACnet::BACnetDev.doBacnetAOValueStatus"          id="85::7" />
+  <native qname="BACnet::BACnetDev.doBacnetAOPriorityStatus"       id="85::8" />
+  <native qname="BACnet::BACnetDev.doBacnetAOOverrideStatus"       id="85::9" />
+  <native qname="BACnet::BACnetDev.doBacnetAOValueUpdate"          id="85::10" />
+  <native qname="BACnet::BACnetDev.doBacnetAOOverrideInst"         id="85::11" />
 
-  <native qname="BACnet::BACnetDev.doBacnetAOValueStatus2"         id="85::11" />
-  <native qname="BACnet::BACnetDev.doBacnetOverrideInst"           id="85::12" />
+  <native qname="BACnet::BACnetDev.doBacnetAVValueStatus"          id="85::12" />
+  <native qname="BACnet::BACnetDev.doBacnetAVPriorityStatus"       id="85::13" />
+  <native qname="BACnet::BACnetDev.doBacnetAVOverrideStatus"       id="85::14" />
+  <native qname="BACnet::BACnetDev.doBacnetAVValueUpdate"          id="85::15" />
+  <native qname="BACnet::BACnetDev.doBacnetAVOverrideInst"         id="85::16" />
 
 </sedonaKit>
 

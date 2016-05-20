@@ -37,7 +37,6 @@
 #include "ao.h"
 #include "handlers.h"
 
-
 #include "sedona.h"
 
 volatile static float level2_ao = 0.0;
@@ -75,9 +74,9 @@ static unsigned int dummy_ao2 = 0;
 /* Here is our Priority Array.  They are supposed to be Real, but */
 /* we don't have that kind of memory, so we will use a single byte */
 /* and load a Real for returning the value when asked. */
-//Titus
-//static uint8_t Analog_Output_Level[MAX_ANALOG_OUTPUTS][BACNET_MAX_PRIORITY];
 
+//Titus: AO should be used as float
+//static uint8_t Analog_Output_Level[MAX_ANALOG_OUTPUTS][BACNET_MAX_PRIORITY];
 static float Analog_Output_Level[MAX_ANALOG_OUTPUTS][BACNET_MAX_PRIORITY];
 
 
@@ -198,31 +197,23 @@ float Analog_Output_Present_Value(
     index = Analog_Output_Instance_To_Index(object_instance);
     if (index < MAX_ANALOG_OUTPUTS) {
         for (i = 0; i < BACNET_MAX_PRIORITY; i++) {
-
-//	printf("Analog_Output_Level[%d][%d] %f\n",index,i,Analog_Output_Level[index][i]);
-
+//	printf("Analog_Output_Present_Value: Analog_Output_Level[%d][%d] %f\n",index,i,Analog_Output_Level[index][i]);
             if (Analog_Output_Level[index][i] != AO_LEVEL_NULL) {
                 value = Analog_Output_Level[index][i];
                 break;
             }
         }
     }
-
 //Updating the float value and priority which are going to send to sedona.
 	level2_ao = value;
 	priority_act_ao = i;
-
-//	printf("################Analog_Output_Present_Value priority_act_ao %d i %d level2_ao %f value %f!!! ################### \n",priority_act_ao,i,level2_ao,value);
-
+//	printf("Analog_Output_Present_Value: priority_act_ao %d i %d level2_ao %f value %f!!! \n",priority_act_ao,i,level2_ao,value);
     return value;
 }
 
 unsigned Analog_Output_Present_Value_Priority(
     uint32_t object_instance)
 {
-
-//	printf("################ Analog_Output_Present_Value_Priority!!! ################### \n");
-
     unsigned index = 0; /* instance to index conversion */
     unsigned i = 0;     /* loop counter */
     unsigned priority = 0;      /* return value */
@@ -245,9 +236,6 @@ bool Analog_Output_Present_Value_Set(
     float value,
     unsigned priority)
 {
-
-//	printf("################ Analog_Output_Present_Value_Set!!! ################### \n");
-
     unsigned index = 0;
     bool status = false;
 
@@ -256,19 +244,9 @@ bool Analog_Output_Present_Value_Set(
         if (priority && (priority <= BACNET_MAX_PRIORITY) &&
             (priority != 6 /* reserved */ ) &&
             (value >= 0.0) && (value <= 100.0)) {
+//Titus: AO should be used as float
 //            Analog_Output_Level[index][priority - 1] = (uint8_t) value;
             Analog_Output_Level[index][priority - 1] = value;
-
-
-//	printf("################ Analog_Output_Present_Value_Set!!! priority %d value %f  ################### \n",priority,value);
-//Titus
-//	 priority_act_ao = priority;
-
-//Titus
-//	if(override_en_ao == 1)
-//	level2_ao = value;
-
-//	printf("################ Analog_Output_Present_Value_Set!!! level2_ao %f priority_act_ao %d ################### \n",level2_ao,priority_act_ao);
 
             /* Note: you could set the physical output here to the next
                highest priority, or to the relinquish default if no
@@ -287,9 +265,6 @@ bool Analog_Output_Present_Value_Relinquish(
     uint32_t object_instance,
     unsigned priority)
 {
-
-//	printf("################ Analog_Output_Present_Value_Relinquish!!! ################### \n");
-
     unsigned index = 0;
     bool status = false;
 
@@ -332,10 +307,6 @@ bool Analog_Output_Object_Name(
 int Analog_Output_Read_Property(
     BACNET_READ_PROPERTY_DATA * rpdata)
 {
-
-
-//	printf("################ Analog_Output_Read_Property!!! ################### \n");
-
 
     int len = 0;
     int apdu_len = 0;   /* return value */
@@ -469,9 +440,8 @@ bool Analog_Output_Write_Property(
     BACNET_WRITE_PROPERTY_DATA * wp_data)
 {
 
-//	printf("################ Analog_Output_Write_Property!!! ################### \n");
-
     bool status = false;        /* return value */
+//Declared as global
 //    unsigned int object_index = 0;
     int len = 0;
     BACNET_APPLICATION_DATA_VALUE value;
@@ -485,7 +455,7 @@ bool Analog_Output_Write_Property(
         /* error while decoding - a value larger than we can handle */
         wp_data->error_class = ERROR_CLASS_PROPERTY;
         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
-	printf("BACNET: PROBE1 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE1 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
         return false;
     }
     /*  only array properties can have array options */
@@ -502,7 +472,7 @@ bool Analog_Output_Write_Property(
                 priority = wp_data->priority;
 		if(priority < priority_sae_ao)
 		{
-//	printf("################ OVERRIDE occured for instance %d!!! ################### \n",wp_data->object_instance);
+//	printf("Analog_Output_Write_Property: OVERRIDE occured for instance %d!!! \n",wp_data->object_instance);
 		ov_instance = wp_data->object_instance;
 		override_en_ao = 1;
 		}
@@ -512,14 +482,12 @@ bool Analog_Output_Write_Property(
                    algorithm and may not be used for other purposes in any
                    object. */
 
+                    status = true;
+
 			if(override_en_ao == 1)
 			{
-//		printf("################ Updating the level in BDT as we received override; object_index %d priority %d value.type.Real %f ################### \n",object_index,priority,value.type.Real);
+//		printf("Analog_Output_Write_Property: Updating the level in BDT as we received override; object_index %d priority %d value.type.Real %f ################### \n",object_index,priority,value.type.Real);
 //                    Binary_Output_Level[object_index][priority] = level;
-
-//Titus: Issue fixed
-//                    Analog_Output_Present_Value_Set(wp_data->object_instance,
-//                    value.type.Real, wp_data->priority);
 
                 status =
                     Analog_Output_Present_Value_Set(wp_data->object_instance,
@@ -534,7 +502,8 @@ bool Analog_Output_Write_Property(
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_WRITE_ACCESS_DENIED;
                 } else if (!status) {
-	printf("BACNET: PROBE2 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE2 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
                     wp_data->error_class = ERROR_CLASS_PROPERTY;
                     wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                 }
@@ -550,14 +519,15 @@ bool Analog_Output_Write_Property(
                         Analog_Output_Present_Value_Relinquish
                         (wp_data->object_instance, wp_data->priority);
                     if (!status) {
-	printf("BACNET: PROBE3 ################ wp_data->error_code %d ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+	printf("BACNET AO: PROBE3 ################ wp_data->error_code %d (may be out of range) ################### \n",ERROR_CODE_VALUE_OUT_OF_RANGE);
+
                         wp_data->error_class = ERROR_CLASS_PROPERTY;
                         wp_data->error_code = ERROR_CODE_VALUE_OUT_OF_RANGE;
                     }
                 }
             }
 
-	//this line is required & important to update the value
+		//Titus: Get the latest value and send to Sedona
 	level2_ao = Analog_Output_Present_Value(wp_data->object_instance);
             break;
 
@@ -593,135 +563,62 @@ bool Analog_Output_Write_Property(
     return status;
 }
 
-
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-Cell BACnet_BACnetDev_doBacnetAOValueStatus2(SedonaVM* vm, Cell* params)
+/* Titus : return the instance or ObjectID to Sedona for which is received override event */
+Cell BACnet_BACnetDev_doBacnetAOValueStatus(SedonaVM* vm, Cell* params)
 {
-
-//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus2: params[0].ival : %d\n",params[0].ival);
-
-
-	level2_ao_new = Analog_Output_Present_Value(params[0].ival);
-
 	Cell result;
+//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus2: params[0].ival : %d\n",params[0].ival);
+	level2_ao_new = Analog_Output_Present_Value(params[0].ival);
 	result.fval = level2_ao_new;
 	return result;
 
 }
 
-
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetOverrideInst(SedonaVM* vm, Cell* params)
+/* Titus : return the particular ObjectID current value to Sedona */
+BACnet_BACnetDev_doBacnetAOOverrideInst(SedonaVM* vm, Cell* params)
 {
-
 	return ov_instance;
-
 }
 
 
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-Cell BACnet_BACnetDev_doBacnetAOValueStatus(SedonaVM* vm, Cell* params)
-{
-
-	Cell result;
-//    printf("BACNET: BACnet_BACnetDev_doBacnetAOValueStatus: Value : %f\n",level2_ao);
-	result.fval = level2_ao;
-	return result;
-
-}
-
-
-/* Titus : return to sedona what BDT gives (the Priority no will be returned) */
+/* Titus : return the actual priority used in BDT (BACnet discovery device) tool to Sedona */
 BACnet_BACnetDev_doBacnetAOPriorityStatus(SedonaVM* vm, Cell* params)
 {
-	priority_sae_ao = params[0].ival;
-
-//	priority_change_ao = params[1].ival;
-
 //    printf("BACnet_BACnetDev_doBacnetAOPriorityStatus: priority_sae_ao : %d  priority_act_ao : %d \n",priority_sae_ao,priority_act_ao);
-
+	priority_sae_ao = params[0].ival;
 	return priority_act_ao;
 }
 
-/* Titus : return if override happens */
+/* Titus : return the override event */
 BACnet_BACnetDev_doBacnetAOOverrideStatus(SedonaVM* vm, Cell* params)
 {
-
 	override_en_bkp_ao = override_en_ao;//backup the override event.
-
-//Fixing temp
 	override_en_ao = 0;//clear out override event.
 	ov_instance = -1;
-
-
-
 //    printf("BACnet_BACnetDev_doBacnetOverrideStatus: level2 : %d  override_en : %d  object_index %d priority %d \n",level2,override_en,object_index,priority);
-
 	return override_en_bkp_ao;
 }
 
-/* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
+/* Titus : Initialize the BACnet objects and update the value in BACnet what Sedona writes */
 BACnet_BACnetDev_doBacnetAOValueUpdate(SedonaVM* vm, Cell* params)
 {
-
-	object_index = params[2].ival;//ObjectID
+	object_index = params[2].ival;//getting ObjectID from Sedona
 
 	if(dummy_ao == 0)
 	{
 	int i=0;
-	printf("AO initialize is done!\n");
+	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: AO initialize is done!\n");
 	dummy_ao++;
-	priority_act_ao = 9;//default priority (@10)
-//	Analog_Output_Level[object_index][--priority_sae_ao] = params[0].fval;//Float Value updating in BDT
+	priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10)
 
-
-/*
-	Analog_Output_Level[1][9] = 0.0;//Init the second object
-	Analog_Output_Level[2][9] = 0.0;//Init the third object
-	Analog_Output_Level[3][9] = 0.0;//Init the fourth object
-	Analog_Output_Level[4][9] = 0.0;//Init the fifth object
-*/
-	for(i=0;i<5;i++)
-	Analog_Output_Level[i][9] = 0.0;//Init all the 5 objects
-
+	for(i=0;i<MAX_ANALOG_OUTPUTS;i++)
+	Analog_Output_Level[i][DEF_SEDONA_PRIORITY] = 0.0;//Init all the 5 objects
 	}
-
 
 	if(params[1].ival) {
-
-//	printf("################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %f\n",object_index,priority_act_ao,params[0].fval);
-
+//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
 	Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
-
 	}
-}
-
-#define NUM_OF_IDS 4
-static int allowedIDs[NUM_OF_IDS] = { 0, 1, 2, 3};
-
-bool isValidID(int which)
-{
-  int g;
-  for (g=0; g<NUM_OF_IDS; g++)
-    if (which == allowedIDs[g]) return TRUE;
-  return FALSE;
-}
-
-
-
-Cell BACnet_BACnetDev_doBacnetInit2(SedonaVM* vm, Cell* params)
-{
-
-  int ID = params[0].ival;
-
-  //
-  // Check for invalid DIO
-  //
-  if ( !isValidID(ID) )
-    return negOneCell;
-  else
-    return zeroCell;		
-
 }
 
 

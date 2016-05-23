@@ -36,6 +36,8 @@
 #include "dlenv.h"
 #include "tsm.h"
 
+#include "sedona.h"
+
 /** @file dlenv.c  Initialize the DataLink configuration. */
 
 #if defined(BACDL_BIP)
@@ -46,6 +48,9 @@ static long bbmd_timetolive_seconds = 60000;
 static long bbmd_port = 0xBAC0;
 static long bbmd_address = 0;
 static int bbmd_result = 0;
+
+//Titus
+extern uint32_t Port_No;
 
 /* Simple setters for BBMD registration variables. */
 
@@ -186,6 +191,12 @@ void dlenv_maintenance_timer(
 #endif
 }
 
+//Titus: Get the PORT NO from Sedona
+BACnet_BACnetDev_doBacnetSendPort(SedonaVM* vm, Cell* params)
+{
+	Port_No = params[0].ival;
+}
+
 /** Initialize the DataLink configuration from Environment variables,
  * or else to defaults.
  * @ingroup DataLink
@@ -244,6 +255,10 @@ void dlenv_init(
 #if defined(BIP_DEBUG)
     BIP_Debug = true;
 #endif
+
+
+//Titus
+#if 0
     pEnv = getenv("BACNET_IP_PORT");
     if (pEnv) {
         bip_set_port(htons((uint16_t) strtol(pEnv, NULL, 0)));
@@ -257,6 +272,14 @@ void dlenv_init(
         if (ntohs(bip_get_port()) < 1024)
             bip_set_port(htons(0xBAC0));
     }
+#endif
+
+
+//Titus: Set the PORT NO which we received from Sedona
+            bip_set_port(htons(Port_No));
+
+
+
 #elif defined(BACDL_MSTP)
     pEnv = getenv("BACNET_MAX_INFO_FRAMES");
     if (pEnv) {

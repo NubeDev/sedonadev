@@ -71,6 +71,8 @@
 #include "bacfile.h"
 #endif /* defined(BACFILE) */
 
+#include "sedona.h"
+
 
 #if defined(__BORLANDC__) || defined(_WIN32)
 /* Not included in time.h as specified by The Open Group */
@@ -604,7 +606,6 @@ void Device_Property_Lists(
    properties that are writable or that may change.
    The properties that are constant can be hard coded
    into the read-property encoding. */
-
 static uint32_t Object_Instance_Number = 260001;
 static BACNET_CHARACTER_STRING My_Object_Name;
 static BACNET_DEVICE_STATUS System_Status = STATUS_OPERATIONAL;

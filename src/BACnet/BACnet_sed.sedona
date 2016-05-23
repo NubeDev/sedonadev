@@ -12,8 +12,10 @@ class BACnetDev
   // Native methods
   //////////////////////////////////////////////////////////////////////////
 
-  native static int doBacnetInit()
+  native static int doBacnetInit(bool opt)
   native static int doBacnetInitStatus()
+  native static int doBacnetSendPort(int port)
+  native static int doBacnetSendDeviceID(int device_id)
 
   native static int doBacnetBOValueStatus(int instance)
   native static int doBacnetBOPriorityStatus(int priority, bool pri_change)

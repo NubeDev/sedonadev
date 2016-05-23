@@ -162,7 +162,9 @@ pthread_t thread1;
 const char *message1 = "Thread 1";
 int  iret1;
 static bool bacnet_status = false;
-	
+static bool bacnet_en_status = false;
+static uint32_t	Device_ID;
+uint32_t Port_No;
 
 
 BACnet_BACnetDev_doBacnetInitStatus(SedonaVM* vm, Cell* params)
@@ -188,28 +190,44 @@ int main_test(
     char *argv[])
 {
 */
-Cell BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
+BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
 {
   bool bac_opt1 = params[0].ival;
 
-    printf("BACnet is initialized now!\n");
-     iret1 = pthread_create( &thread1, NULL, bacnet_init_function, (void*) message1);
-     if(iret1)
-     {
-         fprintf(stderr,"Error - pthread_create() return code: %d\n",iret1);
-         exit(EXIT_FAILURE);
-     }
-     else
-	printf("Thread1 create success\n");
+//	printf("BACnet_BACnetDev_doBacnetInit %d\n",bac_opt1);
+
+	if(bac_opt1)
+	{
+	bacnet_en_status = true;
+	printf("BACNET: BACnet stack is initialized now!\n");
+	iret1 = pthread_create( &thread1, NULL, bacnet_init_function, (void*) message1);
+	     if(iret1)
+		{
+	         fprintf(stderr,"Error - pthread_create() return code: %d\n",iret1);
+	         exit(EXIT_FAILURE);
+		}
+	else
+	printf("BACNET: BACnet stack Thread1 create success\n");
+	}
+
+if(!bac_opt1)
+bacnet_en_status = false;
 	
 }
+
+//Titus: Get the device ID from Sedona
+BACnet_BACnetDev_doBacnetSendDeviceID(SedonaVM* vm, Cell* params)
+{
+Device_ID = params[0].ival;
+}
+
 
 //Titus : thread created to run the SVM in loop
 void *bacnet_init_function( void *ptr )
 {
 char *message;
 message = (char *) ptr;
-printf("%s CALLED\n", message);
+//printf("%s CALLED\n", message);
 
 //initialized
 bacnet_status = true;
@@ -230,12 +248,20 @@ char *argv = NULL;
     static time_t last_seconds = 0;
 
     /* allow the device ID to be set */
-    if (argc > 1)
+//    if (argc > 1)
 //Titus
 //        Device_Set_Object_Instance_Number(strtol(argv[1], NULL, 0));
+
+        Device_Set_Object_Instance_Number(Device_ID);
+
+	printf("\n");
+	printf("###################### BACnet STACK ############################\n");
     printf("BACnet Server Demo\n" "BACnet Stack Version %s\n"
-        "BACnet Device ID: %u\n" "Max APDU: %d\n", BACnet_Version,
-        Device_Object_Instance_Number(), MAX_APDU);
+        "BACnet Device ID: %u\n" "Max APDU: %d\n" "BACnet Port: %d\n", BACnet_Version,
+        Device_Object_Instance_Number(), MAX_APDU, Port_No);
+	printf("################################################################\n");
+	printf("\n");
+
     /* load any static address bindings to show up
 
        in our device bindings list */
@@ -250,6 +276,14 @@ char *argv = NULL;
 
     /* loop forever */
     for (;;) {
+
+	if(!bacnet_en_status)
+	{
+	printf("BACNET: BACnet stack thread terminated!\n");
+	bacnet_status = false;
+	return 0;
+	}
+
         /* input */
         current_seconds = time(NULL);
 

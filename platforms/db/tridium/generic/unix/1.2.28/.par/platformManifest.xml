@@ -120,6 +120,8 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVOverrideStatus" id="85::14" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVValueUpdate" id="85::15" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVOverrideInst" id="85::16" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetSendPort" id="85::17" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetSendDeviceID" id="85::18" />
   <nativeMethod qname="i2c::I2cDev.doI2cInit" id="86::0" />
   <nativeMethod qname="i2c::I2cDev.doI2cExit" id="86::1" />
   <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />

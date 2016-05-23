@@ -20,6 +20,8 @@
   <!-- Natives -->  
   <native qname="BACnet::BACnetDev.doBacnetInit"                   id="85::0" />
   <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::1" />
+  <native qname="BACnet::BACnetDev.doBacnetSendPort"               id="85::17" />
+  <native qname="BACnet::BACnetDev.doBacnetSendDeviceID"           id="85::18" />
 
   <native qname="BACnet::BACnetDev.doBacnetBOValueStatus"          id="85::2" />
   <native qname="BACnet::BACnetDev.doBacnetBOPriorityStatus"       id="85::3" />

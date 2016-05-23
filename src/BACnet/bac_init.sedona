@@ -4,6 +4,7 @@
 //
 // History:
 //   06 Apr 16  Titus   creation
+//   21 May 16  Titus   modified for enabling the BACnet stack control, PORT NO and Device ID 
 //
 
 
@@ -12,23 +13,87 @@ class BACnetInit
   extends Component    
 {
 
-  @defaultOnClone
-//  @config property bool  bac_enable = true
+@defaultOnClone
+@config property bool  BAC_EN = false
+@config property int  PORT_NO = 47808
+@config property int  DEVICE_ID = 260000
 
-  public bool init()
-  {
-    return BACnetDev.doBacnetInit() >= 0
-  }
 
-  virtual override void start()
-  {
-    // Don't touch hardware until input value is valid
-    if ( !Sys.app.isSteadyState() ) 
-      return                     
+//Function for delay
+	static void delay()
+	{
+	Sys.sleep(750ms)
+	}
 
-    // If init succeeds, set isInit true
+
+//Initialize the BACnet stack with Port No and Device ID
+	public void init()
+	{
+	Sys.out.print("SEDONA: $name : BACnet stack is initializing...\n")
+	BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+	BACnetDev.doBacnetSendPort(PORT_NO)
+	BACnetDev.doBacnetInit(BAC_EN)
+	}
+
+//Re initialize the BACnet stack as Port No or Device ID is changed
+	public void reinit()
+	{
+	Sys.out.print("SEDONA: $name : BACnet stack is Re-initializing...\n")
+	BACnetDev.doBacnetInit(false)
+	delay()
+	BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+	BACnetDev.doBacnetSendPort(PORT_NO)
+	BACnetDev.doBacnetInit(true)
+	}
+
+//Function for App start
+	virtual override void start()
+	{
+	Sys.out.print("SEDONA: $name : BACnetInit app Started!\n")
+
+		// Don't touch hardware until input value is valid
+		if ( !Sys.app.isSteadyState() ) 
+		return
+
+	//Initialize the stack with PORT No and Device ID.
 	init()
-    return
-  }
+
+	return
+	}
+
+//Function for when there is change in Sedona
+	override void changed(Slot slot)
+	{
+	super.changed(slot)
+
+	// Don't respond to prop changes while app is loading
+	if (!Sys.app.isRunning()) return
+
+		if ( slot == BACnetInit.BAC_EN )
+		{
+		//Sys.out.print("SEDONA: BACnetInit.BAC_EN changed! $BAC_EN\n") 
+		start()
+		}
+
+		if ( slot == BACnetInit.PORT_NO || slot == BACnetInit.DEVICE_ID )
+		{
+		//Sys.out.print("SEDONA: BACnetInit.PORT_NO or BACnetInit.DEVICE_ID changed! $BAC_EN\n")
+		
+			//Re initialize the stack if BAC_EN bit is set
+			if(BAC_EN)
+			reinit()
+		}
+
+	}
+
+
+//Function for App stop
+	virtual override void stop()
+	{
+	Sys.out.print("SEDONA: $name : BACnetInit app Stopped!\n")
+	//terminate the BACnet stack
+	BACnetDev.doBacnetInit(false)
+	}
+
 
 }

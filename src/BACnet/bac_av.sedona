@@ -32,7 +32,7 @@ virtual void loaded()
     if ( !Sys.app.isSteadyState() )
       return
 
-//	Sys.out.print("SEDONA: $name : \"BACnetAV\" App Started!\n")
+	Sys.out.print("SEDONA: $name : \"BACnetAV\" App Started!\n")
    return
 
   }

@@ -71,8 +71,13 @@ class BACnetInit
 
 		if ( slot == BACnetInit.BAC_EN )
 		{
-		//Sys.out.print("SEDONA: BACnetInit.BAC_EN changed! $BAC_EN\n") 
+		//Sys.out.print("SEDONA: BACnetInit.BAC_EN changed! $BAC_EN\n")
+	
+		if(BAC_EN == false)
+		BACnetDev.doBacnetInit(BAC_EN)		
+		else
 		start()
+
 		}
 
 		if ( slot == BACnetInit.PORT_NO || slot == BACnetInit.DEVICE_ID )

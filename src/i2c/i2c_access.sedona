@@ -17,7 +17,7 @@ class I2cAccess
 
   @config property int Read = 0
   @config property int Write = 0
-  @config property bool Enable = false
+  @config property bool Enable = true
 
 
   virtual override void start()

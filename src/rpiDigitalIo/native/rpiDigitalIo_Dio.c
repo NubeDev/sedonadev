@@ -18,7 +18,7 @@
 
 #include <errno.h>
 
-#include "gpio.h"
+//#include "gpio.h"
 
 // Uncomment this to print diagnostics
 //#define SHOW_DEBUG

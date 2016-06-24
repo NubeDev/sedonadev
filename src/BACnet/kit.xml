@@ -1,6 +1,7 @@
 <!--
   -  Sedona Kit
   -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -  06 Apr 16  Titus   creation
   -->
 
 <sedonaKit
@@ -17,29 +18,43 @@
   <!-- Source Directories -->
   <source dir="."/>
 
-  <!-- Natives -->  
+  <!-- Natives -->
+
+  <!-- BACnet fns -->
   <native qname="BACnet::BACnetDev.doBacnetInit"                   id="85::0" />
   <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::1" />
   <native qname="BACnet::BACnetDev.doBacnetSendPort"               id="85::17" />
   <native qname="BACnet::BACnetDev.doBacnetSendDeviceID"           id="85::18" />
 
+  <!-- BACnet BINARY OUTPUT fns -->
   <native qname="BACnet::BACnetDev.doBacnetBOValueStatus"          id="85::2" />
   <native qname="BACnet::BACnetDev.doBacnetBOPriorityStatus"       id="85::3" />
   <native qname="BACnet::BACnetDev.doBacnetBOOverrideStatus"       id="85::4" />
   <native qname="BACnet::BACnetDev.doBacnetBOValueUpdate"          id="85::5" />
   <native qname="BACnet::BACnetDev.doBacnetBOOverrideInst"         id="85::6" />
+  <native qname="BACnet::BACnetDev.doBacnetBOObjectIdUpdate"       id="85::19" />
+  <native qname="BACnet::BACnetDev.doBacnetBOObjectIdBkp"          id="85::20" />
 
+  <!-- BACnet ANALOG OUTPUT fns -->
   <native qname="BACnet::BACnetDev.doBacnetAOValueStatus"          id="85::7" />
   <native qname="BACnet::BACnetDev.doBacnetAOPriorityStatus"       id="85::8" />
   <native qname="BACnet::BACnetDev.doBacnetAOOverrideStatus"       id="85::9" />
   <native qname="BACnet::BACnetDev.doBacnetAOValueUpdate"          id="85::10" />
   <native qname="BACnet::BACnetDev.doBacnetAOOverrideInst"         id="85::11" />
+  <native qname="BACnet::BACnetDev.doBacnetAOObjectIdUpdate"       id="85::21" />
+  <native qname="BACnet::BACnetDev.doBacnetAOObjectIdBkp"          id="85::22" />
 
+  <!-- BACnet ANALOG VALUE fns -->
   <native qname="BACnet::BACnetDev.doBacnetAVValueStatus"          id="85::12" />
   <native qname="BACnet::BACnetDev.doBacnetAVPriorityStatus"       id="85::13" />
   <native qname="BACnet::BACnetDev.doBacnetAVOverrideStatus"       id="85::14" />
   <native qname="BACnet::BACnetDev.doBacnetAVValueUpdate"          id="85::15" />
   <native qname="BACnet::BACnetDev.doBacnetAVOverrideInst"         id="85::16" />
+  <native qname="BACnet::BACnetDev.doBacnetAVObjectIdUpdate"       id="85::23" />
+  <native qname="BACnet::BACnetDev.doBacnetAVObjectIdBkp"          id="85::24" />
+  <native qname="BACnet::BACnetDev.doBacnetAVNullStatus"           id="85::25" />
+  <native qname="BACnet::BACnetDev.doBacnetAVNullInst"             id="85::26" />
+
 
 </sedonaKit>
 

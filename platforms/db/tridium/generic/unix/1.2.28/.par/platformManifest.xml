@@ -19,6 +19,7 @@
   <nativeKit depend="rpiDigitalIo 1.0+" />
   <nativeKit depend="BACnet 1.0+" />
   <nativeKit depend="i2c 1.0+" />
+  <nativeKit depend="mqtt 1.0+" />
 
   <nativeMethod qname="sys::Sys.platformType" id="0::0" />
   <nativeMethod qname="sys::Sys.copy" id="0::1" />
@@ -122,11 +123,33 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVOverrideInst" id="85::16" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetSendPort" id="85::17" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetSendDeviceID" id="85::18" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOObjectIdUpdate" id="85::19" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetBOObjectIdBkp" id="85::20" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOObjectIdUpdate" id="85::21" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAOObjectIdBkp" id="85::22" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVObjectIdUpdate" id="85::23" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVObjectIdBkp" id="85::24" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVNullStatus" id="85::25" />
+  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVNullInst" id="85::26" />
   <nativeMethod qname="i2c::I2cDev.doI2cInit" id="86::0" />
   <nativeMethod qname="i2c::I2cDev.doI2cExit" id="86::1" />
   <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />
   <nativeMethod qname="i2c::I2cDev.doI2cWrite" id="86::3" />
   <nativeMethod qname="i2c::I2cDev.doI2cSensorReadEnStatus" id="86::4" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttPublisherInt" id="95::0" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttPublisherMsg" id="95::1" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttInit_pub" id="95::2" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus" id="95::3" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID" id="95::4" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj" id="95::5" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberInt" id="95::6" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberMsg" id="95::7" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttInit_sub" id="95::8" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus_Sub" id="95::9" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Sub" id="95::10" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj_Sub" id="95::11" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttArrayTest" id="95::12" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttRead_Topic" id="95::13" />
 </natives>
 
 <manifestIncludes>

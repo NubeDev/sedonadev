@@ -30,8 +30,6 @@
     <nativeSource path="/src/BACnet/native" />
     <nativeSource path="/src/i2c/native" />
 
-
-
   </compile>    
   
   <manifestInclude>

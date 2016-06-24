@@ -38,7 +38,7 @@ def gcc(exeFile, srcFiles, includes, libs, defs):
 
 #Titus : Need to add pthread library to build
   cmd += " -pthread"
-  cmd += " -DPRINT_ENABLED=1"
+#  cmd += " -DPRINT_ENABLED=1"
 
 
   cmd += " -DPLAT_BUILD_VERSION=" + '\\"' + env.buildVersion() + '\\"'

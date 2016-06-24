@@ -3,7 +3,7 @@
 // All Rights Reserved.
 //
 // History:
-//   16 May 16  Titus   creation
+//   16 May 16 Titus creation
 //
 
 //@niagaraIcon="module://icons/x16/io.png"
@@ -20,12 +20,6 @@ class BACnetAV
   @defaultOnClone
   @config property int ObjectID = -1
 
-/*
-virtual void loaded()
-{
-}
-*/
-
   virtual override void start()
   {
     // Don't touch hardware until input value is valid
@@ -39,17 +33,34 @@ virtual void loaded()
 
   override void changed(Slot slot)
   {
-
     super.changed(slot)
 
     // Don't respond to prop changes while app is loading
     if (!Sys.app.isRunning()) return
 
+    if ( slot == BACnetAV.ObjectID )
+	{
+	objID_status = true;
+	//Read the older value stored in the ObjectID (need to back as we are going to change the ObjectID)
+	ret7 = BACnetDev.doBacnetAVObjectIdBkp(ObjectID)
+	//write the older value
+	Out := ret7
+	ret6 = BACnetDev.doBacnetAVObjectIdUpdate(ObjectID,Out,Priority)
+	Sys.out.print("SEDONA: $name: BACnetAV: ObjectID is changed and Priority:$ret6 Out:$Out ObjectID:$ObjectID!\n")
+	}
+
     // If BACnetAV.In changes, clear the override and drive what IN has.
     if ( slot == BACnetAV.In )
 	{
-	false_bkp = false;
-	true_bkp = false;
+
+//clear NULL status
+	ret8 = false;
+
+//clear objectID change status
+	objID_status = false;
+
+	null_status = true;
+	count = 0;
 
 //Allow to write by Sedona continuously if no write happens in BDT @1
 	if ( ret2 != 0 )
@@ -59,13 +70,14 @@ virtual void loaded()
 	if ( ret2 == 0 )
 	{
 //	Sys.out.print("########### $name SEDONA ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
-	Sys.out.print("SEDONA: $name: BACnetAV: ALERT!!!: Not allowed to write by Sedona if BDT is written @1, so pls make sure.  ###########\n")
+	Sys.out.print("SEDONA: $name: BACnetAV: Not allowed to write by Sedona if BDT is written @1, so pls make sure.\n")
 
 	ov = true;
 	}
 
 	//clear the event
 	ia[ObjectID] = -1;
+	ib[ObjectID] = false;
 //	Sys.out.print("$name SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
 
 	In_change = true;
@@ -75,9 +87,7 @@ virtual void loaded()
 	override_en = 0;
 
 	}
-
   }
-
 
  virtual override void execute()
   {
@@ -94,23 +104,30 @@ ia[ret4] = 1;
 
 override_en = BACnetDev.doBacnetAVOverrideStatus()
 
+//Sys.out.print("SEDONA: $name: BACnetAV: ################## Glory to GOD! ################## ObjectID $ObjectID override_en $override_en ret4 $ret4\n");
+
 if (ret3 == 0)
 Sys.out.print("SEDONA: $name: BACnetAV: \"BACnetAV\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetAV\n")
 
 //overriding part
 if( ia[ObjectID] == 1 )
       {
+	Sys.out.print("SEDONA: $name: BACnetAV: I'm in BACNET WRITE loop $ret3 $ov $objID_status  $ret8\n")
 	Out := ret
 	ov = true;
 	//clearing the override
 	override_en = 0
       }
 
-
 //all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
-if ( (ret3 == 1) && (ov == false) && (true_bkp == false) && ( priority_max >= Priority ) )
+if ( (ret3 == 1) && (ov == false) && (objID_status == false) && (ret8 == false) )
 {
+Sys.out.print("SEDONA: $name: BACnetAV: I'm in SEDONA WRITE loop  $ret3 $ov $objID_status  $ret8 \n")
+
+//if(!ib[ObjectID])
+if(In_change)
 Out := In
+
 //need to send the Out value to BACnet to update the "level" variable to replicate the same in BDT tool.
 BACnetDev.doBacnetAVValueUpdate(Out, In_change, ObjectID)
 In_change = false;
@@ -118,28 +135,50 @@ In_change = false;
 
 if (Priority > 16)
 {
-Sys.out.print("SEDONA: $name: BACnetAV: Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
+//Sys.out.print("SEDONA: $name: BACnetAV: Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
 Priority := 10
 }
 
 //Its for setting priority to BDT
-ret2 = BACnetDev.doBacnetAVPriorityStatus(Priority, pri_change)
+ret2 = BACnetDev.doBacnetAVPriorityStatus(Priority, pri_change, ObjectID)
 
-if ( ret2 != 1 )
+if ( ret2 != 0 )
 {
-pri_bkp = false;
-//Sys.out.print("Priority level is cleared by writing NULL @1 in BDT\n")
+//Sys.out.print("################## Glory to GOD! override is cleared now, priority $ret2 ##################\n")
+ov = false;
 }
 
-if ( ret2 == 1 )
+ret9 = BACnetDev.doBacnetAVNullInst()
+
+ib[ret9] = true;
+
+ret8 = BACnetDev.doBacnetAVNullStatus()
+
+//Sys.out.print("SEDONA: $name: BACnetAV: ################## Glory to GOD! ################## ObjectID $ObjectID ret9 $ret9 ret8 $ret8\n");
+
+if ( ib[this.ObjectID] == true )
 {
-pri_bkp = true;
-//Sys.out.print("Priority level is set @1 in BDT\n")
+Sys.out.print("SEDONA: $name: BACnetAV: NULL loop status -> $ret8  ObjectID -> $ObjectID ret9 -> $ret9 ret8 -> $ret8\n")
+//clear the event
+ia[ObjectID] = -5;
+ret8 = false
+
+null_status2 = true;
+
+if(null_status && count == 0)
+{
+count++;
+In_change = true;
+}
+else
+In_change = false;
+
 }
 
   }
 
 //defining the local variables
+define int MAX_ANALOG_VALUES = 5;
 static int override_en = 0;
 bool ov = false;
 float ret = 0.0;
@@ -147,10 +186,18 @@ int ret2 = 255;
 int ret3 = 0;
 int ret4 = -1;
 int priority_max = 16;
-bool false_bkp = false;
-bool true_bkp = false;
 bool In_change = null;
 bool pri_change = null;
 bool pri_bkp = false;
-inline static int[5] ia
+inline static int[MAX_ANALOG_VALUES] ia
+inline static bool[MAX_ANALOG_VALUES] ib
+bool objID_status = false;
+int ret6 = 9;
+float ret7 = 0.0;
+
+static bool ret8 = false;
+static int ret9 = -1;
+bool null_status = false;
+bool null_status2 = false;
+int count = 0
 }

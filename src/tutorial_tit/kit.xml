@@ -1,4 +1,0 @@
-<sedonaKit name="tutorial_tit" vendor="Tridium" description="Testing sedona framework">
-  <depend on="sys 1.2+" />
-  <source dir="." />
-</sedonaKit>

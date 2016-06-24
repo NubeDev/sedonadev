@@ -49,11 +49,27 @@ virtual void loaded()
     // Don't respond to prop changes while app is loading
     if (!Sys.app.isRunning()) return
 
+
+    if ( slot == BACnetAO.ObjectID )
+	{
+	objID_status = true;
+	//Read the older value stored in the ObjectID (need to back as we are going to change the ObjectID)
+	ret7 = BACnetDev.doBacnetAOObjectIdBkp(ObjectID)
+	//write the older value
+	Out := ret7
+	ret6 = BACnetDev.doBacnetAOObjectIdUpdate(ObjectID,Out,Priority)
+	Sys.out.print("SEDONA: $name: BACnetAO: ObjectID is changed and Priority:$ret6 Out:$Out ObjectID:$ObjectID!\n")
+	}
+
+
     // If BACnetAO.In changes, clear the override and drive what IN has.
     if ( slot == BACnetAO.In )
 	{
 	false_bkp = false;
 	true_bkp = false;
+
+//clear objectID change status
+	objID_status = false;
 
 //Allow to write by Sedona continuously if no write happens in BDT @1
 	if ( ret2 != 0 )
@@ -63,7 +79,7 @@ virtual void loaded()
 	if ( ret2 == 0 )
 	{
 //	Sys.out.print("SEDONA: ########### $name ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
-	Sys.out.print("$name: BACnetAO: SEDONA app ALERT!!!: Not allowed to write by Sedona if BDT is written @1, so pls make sure.  ###########\n")
+	Sys.out.print("SEDONA: $name: BACnetAO: Not allowed to write by Sedona if BDT is written @1, so pls make sure.n")
 
 	ov = true;
 	}
@@ -73,7 +89,7 @@ virtual void loaded()
 //	Sys.out.print("SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
 
 	In_change = true;
-	Sys.out.print("$name: BACnetAO: SEDONA app: Override is cleared as \"BACnetAO.In\" is changed, so now, drive what \"BACnetAO.In\" has! ( also please note that you can't control AOs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
+	Sys.out.print("SEDONA: $name: BACnetAO: Override is cleared as \"BACnetAO.In\" is changed, so now, drive what \"BACnetAO.In\" has! ( also please note that you can't control AOs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
 
 //latest fix
 	override_en = 0;
@@ -94,15 +110,12 @@ ret = BACnetDev.doBacnetAOValueStatus(ObjectID)
 
 ret4 = BACnetDev.doBacnetAOOverrideInst()
 
-
 ia[ret4] = 1;
-
-
 
 override_en = BACnetDev.doBacnetAOOverrideStatus()
 
 if (ret3 == 0)
-Sys.out.print("$name: BACnetAO: SEDONA app: \"BACnetAO\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetAO\n")
+Sys.out.print("SEDONA: $name: BACnetAO: \"BACnetAO\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetAO\n")
 
 if( ia[ObjectID] == 1 )
       {
@@ -113,7 +126,7 @@ if( ia[ObjectID] == 1 )
       }
 
 //all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
-if ( (ret3 == 1) && (ov == false) && (true_bkp == false) && ( priority_max >= Priority ) )
+if ( (ret3 == 1) && (ov == false) && (objID_status == false) )
 {
 //Sys.out.print("SEDONA: $name Over ride is cleared, so drive to Out what In has!\n")
 Out := In
@@ -129,19 +142,12 @@ Priority := 10
 }
 
 //Its for setting priority to BDT
-ret2 = BACnetDev.doBacnetAOPriorityStatus(Priority, pri_change)
+ret2 = BACnetDev.doBacnetAOPriorityStatus(Priority, pri_change, ObjectID)
 
-if ( ret2 != 1 )
-{
-pri_bkp = false;
-//Sys.out.print("SEDONA: Priority level is cleared by writing NULL @1 in BDT $ret2\n")
-}
 
-if ( ret2 == 1 )
-{
-pri_bkp = true;
-//Sys.out.print("SEDONA: Priority level is set @1 in BDT $ret2\n")
-}
+//Take the value from BACnet.In after override is released.
+if ( ret2 != 0 )
+ov = false;
 
   }
 
@@ -159,7 +165,8 @@ bool In_change = null;
 bool pri_change = null;
 bool pri_bkp = false;
 inline static int[5] ia
-
-
+bool objID_status = false;
+int ret6 = 9;
+float ret7 = 0.0;
 
 }

@@ -19,7 +19,6 @@
   <nativeKit depend="rpiDigitalIo 1.0+" />
   <nativeKit depend="BACnet 1.0+" />
   <nativeKit depend="i2c 1.0+" />
-  <nativeKit depend="mqtt 1.0+" />
 
   <nativeMethod qname="sys::Sys.platformType" id="0::0" />
   <nativeMethod qname="sys::Sys.copy" id="0::1" />
@@ -136,20 +135,6 @@
   <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />
   <nativeMethod qname="i2c::I2cDev.doI2cWrite" id="86::3" />
   <nativeMethod qname="i2c::I2cDev.doI2cSensorReadEnStatus" id="86::4" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttPublisherInt" id="95::0" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttPublisherMsg" id="95::1" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttInit_pub" id="95::2" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus" id="95::3" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID" id="95::4" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj" id="95::5" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberInt" id="95::6" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberMsg" id="95::7" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttInit_sub" id="95::8" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus_Sub" id="95::9" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Sub" id="95::10" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj_Sub" id="95::11" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttArrayTest" id="95::12" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttRead_Topic" id="95::13" />
 </natives>
 
 <manifestIncludes>

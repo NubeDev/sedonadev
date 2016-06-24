@@ -15,7 +15,7 @@
 
 #export sedona_home=~/sedonadev-RPi2
 #Titus : sedona location in PC
-export sedona_home=/home/titus/workdir/rPi/sedonadev-RPi2-bacnet-mqtt-latest/June22/sedonadev-RPi2-bacnet-mqtt-pub-sub
+export sedona_home=/home/titus/workdir/rPi/sedonadev-RPi2-bacnet-mqtt-git
 
 # path
 export PATH=$PATH:$sedona_home/bin:$sedona_home/adm:$sedona_home/adm/unix

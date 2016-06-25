@@ -1,0 +1,277 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="hvac"
+   checksum="7264c67c"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="HVAC function block library"
+   buildHost="tie2e"
+   buildTime="2016-06-25T14:06:00.411+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+  <depend on="types 1.2+"/>
+</depends>
+
+<!-- hvac::LSeq -->
+<type id="0" name="LSeq" sizeof="84" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/step.png"/>
+  </facets>
+  <slot id="0" name="in" type="float"/>
+  <slot id="1" name="inMin" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="inMax" type="float" flags="c" default="100.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="numOuts" type="int" flags="c" default="16">
+    <facets>
+      <int name="min" val="1"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="4" name="delta" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="5" name="dOn" type="byte">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="6" name="out1" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="7" name="out2" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="8" name="out3" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="9" name="out4" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="out5" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="11" name="out6" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="12" name="out7" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="13" name="out8" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="14" name="out9" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="15" name="out10" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="16" name="out11" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="17" name="out12" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="18" name="out13" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="19" name="out14" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="20" name="out15" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="21" name="out16" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="22" name="ovfl" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- hvac::ReheatSeq -->
+<type id="1" name="ReheatSeq" sizeof="68" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/step.png"/>
+  </facets>
+  <slot id="0" name="out1" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="out2" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="out3" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="out4" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="in" type="float"/>
+  <slot id="5" name="enable" type="bool" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="6" name="dOn" type="byte" default="0">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="7" name="hysteresis" type="float" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="8" name="threshold1" type="float" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="9" name="threshold2" type="float" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="threshold3" type="float" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="11" name="threshold4" type="float" flags="c">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- hvac::Reset -->
+<type id="2" name="Reset" sizeof="64" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/math/reset.png"/>
+  </facets>
+  <slot id="0" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="in" type="float"/>
+  <slot id="2" name="inMin" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="inMax" type="float" flags="c" default="4095.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="outMin" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="5" name="outMax" type="float" flags="c" default="100.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- hvac::Tstat -->
+<type id="3" name="Tstat" sizeof="52" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="diff" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="isHeating" type="bool" flags="c" default="false">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="sp" type="float" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="cv" type="float"/>
+  <slot id="4" name="out" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="5" name="raise" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="6" name="lower" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+</kitManifest>

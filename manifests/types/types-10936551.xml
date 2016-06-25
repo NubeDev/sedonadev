@@ -1,0 +1,292 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="types"
+   checksum="10936551"
+   hasNatives="false"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Basic types and constants"
+   buildHost="tie2e"
+   buildTime="2016-06-25T14:06:00.303+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2+"/>
+</depends>
+
+<!-- types::B2F -->
+<type id="0" name="B2F" sizeof="60" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="count" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="in1" type="bool"/>
+  <slot id="3" name="in2" type="bool"/>
+  <slot id="4" name="in3" type="bool"/>
+  <slot id="5" name="in4" type="bool"/>
+  <slot id="6" name="in5" type="bool"/>
+  <slot id="7" name="in6" type="bool"/>
+  <slot id="8" name="in7" type="bool"/>
+  <slot id="9" name="in8" type="bool"/>
+  <slot id="10" name="in9" type="bool"/>
+  <slot id="11" name="in10" type="bool"/>
+  <slot id="12" name="in11" type="bool"/>
+  <slot id="13" name="in12" type="bool"/>
+  <slot id="14" name="in13" type="bool"/>
+  <slot id="15" name="in14" type="bool"/>
+  <slot id="16" name="in15" type="bool"/>
+  <slot id="17" name="in16" type="bool"/>
+</type>
+
+<!-- types::ConstBool -->
+<type id="1" name="ConstBool" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/booleanPoint.png"/>
+  </facets>
+  <slot id="0" name="out" type="bool" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="setTrue" type="void" flags="a"/>
+  <slot id="2" name="setFalse" type="void" flags="a"/>
+  <slot id="3" name="setNull" type="void" flags="a"/>
+</type>
+
+<!-- types::ConstFloat -->
+<type id="2" name="ConstFloat" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/numericPoint.png"/>
+  </facets>
+  <slot id="0" name="out" type="float" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="set" type="float" flags="a"/>
+  <slot id="2" name="setNull" type="void" flags="a"/>
+</type>
+
+<!-- types::ConstInt -->
+<type id="3" name="ConstInt" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/enumPoint.png"/>
+  </facets>
+  <slot id="0" name="out" type="int" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="set" type="int" flags="a"/>
+</type>
+
+<!-- types::F2B -->
+<type id="4" name="F2B" sizeof="60" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="in" type="float"/>
+  <slot id="1" name="out1" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="out2" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="out3" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="4" name="out4" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="5" name="out5" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="6" name="out6" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="7" name="out7" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="8" name="out8" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="9" name="out9" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="out10" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="11" name="out11" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="12" name="out12" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="13" name="out13" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="14" name="out14" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="15" name="out15" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="16" name="out16" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="17" name="ovrf" type="bool">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- types::F2I -->
+<type id="5" name="F2I" sizeof="44" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="in" type="float"/>
+  <slot id="1" name="out" type="int">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- types::I2F -->
+<type id="6" name="I2F" sizeof="44" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/util/switch.png"/>
+  </facets>
+  <slot id="0" name="in" type="int"/>
+  <slot id="1" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- types::L2F -->
+<type id="7" name="L2F" sizeof="48" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/doubleArrowRight.png"/>
+  </facets>
+  <slot id="0" name="in" type="long"/>
+  <slot id="1" name="out" type="float">
+    <facets>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- types::WriteBool -->
+<type id="8" name="WriteBool" sizeof="40" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/booleanPointWr.png"/>
+  </facets>
+  <slot id="0" name="in" type="bool" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="out" type="bool">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="setTrue" type="void" flags="a"/>
+  <slot id="3" name="setFalse" type="void" flags="a"/>
+  <slot id="4" name="setNull" type="void" flags="a"/>
+</type>
+
+<!-- types::WriteFloat -->
+<type id="9" name="WriteFloat" sizeof="44" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/numericPointWr.png"/>
+  </facets>
+  <slot id="0" name="in" type="float" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="out" type="float">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="set" type="float" flags="a"/>
+  <slot id="3" name="setNull" type="void" flags="a"/>
+</type>
+
+<!-- types::WriteInt -->
+<type id="10" name="WriteInt" sizeof="44" base="sys::Component">
+  <facets>
+    <str name="niagaraIcon" val="module://icons/x16/control/enumPointWr.png"/>
+  </facets>
+  <slot id="0" name="in" type="int" flags="c">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="out" type="int">
+    <facets>
+      <bool name="summary" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="set" type="int" flags="a"/>
+</type>
+
+</kitManifest>

@@ -1,0 +1,117 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="BACnet"
+   checksum="552781cf"
+   hasNatives="true"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Support for Raspberry Pi BACnet control"
+   buildHost="tie2e"
+   buildTime="2016-06-25T14:06:00.666+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2"/>
+</depends>
+
+<!-- BACnet::BACnetAO -->
+<type id="0" name="BACnetAO" sizeof="88" base="sys::Component">
+  <slot id="0" name="Priority" type="int" flags="c" default="10">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="In" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="Out" type="float" default="0.0">
+    <facets>
+      <bool name="readonly" val="true"/>
+      <bool name="allowNull" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- BACnet::BACnetAV -->
+<type id="1" name="BACnetAV" sizeof="92" base="sys::Component">
+  <slot id="0" name="Priority" type="int" flags="c" default="10">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="In" type="float" flags="c" default="0.0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="Out" type="float" default="0.0">
+    <facets>
+      <bool name="readonly" val="true"/>
+      <bool name="allowNull" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- BACnet::BACnetBO -->
+<type id="2" name="BACnetBO" sizeof="84" base="sys::Component">
+  <slot id="0" name="Priority" type="int" flags="c" default="10">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="In" type="bool" flags="c" default="false">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="Out" type="bool" default="false">
+    <facets>
+      <bool name="readonly" val="true"/>
+      <bool name="allowNull" val="true"/>
+    </facets>
+  </slot>
+  <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- BACnet::BACnetInit -->
+<type id="3" name="BACnetInit" sizeof="48" base="sys::Component">
+  <slot id="0" name="BAC_EN" type="bool" flags="c" default="false">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="PORT_NO" type="int" flags="c" default="47808">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="DEVICE_ID" type="int" flags="c" default="260000">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+</kitManifest>

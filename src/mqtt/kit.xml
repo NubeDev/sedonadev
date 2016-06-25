@@ -1,0 +1,42 @@
+<!--
+  -  Sedona Kit
+  -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -  10 Jun 16  Titus   created
+  -  23 Jun 16  Titus   modified
+  -->
+
+<sedonaKit
+ name = "mqtt"
+ vendor = "Tridium"
+ description = "Support for Raspberry Pi MQTT"
+ includeSource = "true"
+ doc = "true"
+>
+
+  <!-- Dependencies -->
+  <depend on="sys 1.2" />
+
+  <!-- Source Directories -->
+  <source dir="."/>
+
+  <!-- Natives -->
+
+  <!-- BACnet fns -->
+  <native qname="mqtt::MqttDev.doMqttPublisherInt"          id="95::0" />
+  <native qname="mqtt::MqttDev.doMqttPublisherMsg"          id="95::1" />
+  <native qname="mqtt::MqttDev.doMqttInit_pub"              id="95::2" />
+  <native qname="mqtt::MqttDev.doMqttNetworkStatus"         id="95::3" />
+  <native qname="mqtt::MqttDev.doMqttNwErrID"               id="95::4" />
+  <native qname="mqtt::MqttDev.doMqttNwErrID_Obj_Pub"       id="95::5" />
+  <native qname="mqtt::MqttDev.doMqttSubscriberInt"         id="95::6" />
+  <native qname="mqtt::MqttDev.doMqttSubscriberMsg"         id="95::7" />
+  <native qname="mqtt::MqttDev.doMqttInit_sub"              id="95::8" />
+  <native qname="mqtt::MqttDev.doMqttNetworkStatus_Sub"     id="95::9" />
+  <native qname="mqtt::MqttDev.doMqttNwErrID_Sub"           id="95::10" />
+  <native qname="mqtt::MqttDev.doMqttNwErrID_Obj_Sub"       id="95::11" />
+<!--  <native qname="mqtt::MqttDev.doMqttArrayTest"             id="95::12" /> -->
+  <native qname="mqtt::MqttDev.doMqttRead_Topic"            id="95::13" />
+
+
+</sedonaKit>
+

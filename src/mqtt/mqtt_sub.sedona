@@ -28,13 +28,14 @@ define Str NetworkStatus = "Disconnected, Connected"
 @range=NetworkStatus
 @readonly property byte status = Disconnected
 
-define int Ok = 0
+define int No_Err = 0
 define int Err_InvalidHost = 1
 define int Err_InvalidPort = 2
 define int Err_InvalidClientId = 3
 define int Err_InvalidTopic = 4
+define int Err_Unknown = 5
 
-define Str NwError = "Ok, Invalid Host, Invalid Port, Invalid ClientId, Invalid Topic"
+define Str NwError = "No Err, Invalid Host, Invalid Port, Invalid ClientId, Invalid Topic, Unknown Err"
 @range=NwError
 @readonly property byte error = 0
 
@@ -87,6 +88,25 @@ define Log log
 	inst = 15;
 	}
 
+	bool validInputs()
+	{
+		if ( Port == 0 )
+			error := Err_InvalidPort
+		else if (Host.toStr().length() == 0)
+			error := Err_InvalidHost
+		else if (Clientid.toStr().length() == 0)
+			error := Err_InvalidClientId
+		else if (Topic.toStr().length() == 0)
+			error := Err_InvalidTopic
+		else
+			error := No_Err
+
+		if(!error)
+		return true;
+
+	return false;
+	}
+
 	override void changed(Slot slot)
 	{
 	super.changed(slot)
@@ -98,7 +118,7 @@ define Log log
 	{
 		if( count == 1 )
 		{
-			for ( int i=0; i<14; ++i )
+			for ( int i=0; i<15; ++i )
 			{
 			if(inst == i)
 			Sub_ID := i
@@ -113,48 +133,28 @@ define Log log
 		MqttDev.doMqttSubscriberMsg(Sub_ID, Enable, Int_Msg,  Host.toStr(), Topic.toStr(), Port, Clientid.toStr(), Username.toStr(), Password.toStr(), QOS)
 		}
 
-		if( this.Sub_ID != -1 && this.Enable )
+		if( this.Sub_ID != -1 && this.Enable && validInputs() )
 		{
-
-		if (Port == 0)
-			error := Err_InvalidPort
-		else if (Host.toStr().length() == 0)
-			error := Err_InvalidHost
-		else if (Clientid.toStr().length() == 0)
-			error := Err_InvalidClientId
-		else if (Topic.toStr().length() == 0)
-			error := Err_InvalidTopic
-		else
-			error := Ok
-
 		this.msg_int = MqttDev.doMqttSubscriberInt(this.Sub_ID)
-		this.nw_err_id = MqttDev.doMqttNwErrID_Sub()
-		this.nw_status = MqttDev.doMqttNetworkStatus_Sub()
+		nw_status_array = MqttDev.doMqttNetworkStatus_Sub(array_dummy)
 		topic_rcd = MqttDev.doMqttRead_Topic()
-
+	
 			if( this.topic_rcd == Topic.toStr() )
 			Int_Msg := this.msg_int
 
-		nw_arr[this.nw_err_id] = this.nw_status
-
-//	log.message("################# SEDONA  handle[0] : ${handle[0]}, handle[1] : ${handle[1]} ############\n");
-
-//	if(this.Sub_ID == this.nw_err_id)
-//	log.message("################# SEDONA: $name nw_err_id : $nw_err_id  nw_status : $nw_status #############\n")	
-
-//	if(nw_arr[this.nw_err_id] == 1)
-//	log.message("Network Array Status; ID is $id; Name is $name; nw_arr[0] : ${nw_arr[0]}, nw_arr[1] : ${nw_arr[1]},  nw_arr[2] : ${nw_arr[2]},  ID -> $nw_err_id, NW STAT -> $nw_status\n")	
-
-			if( nw_arr[this.Sub_ID] < 0 || error != 0 )
-//			if( this.nw_status < 0 && this.nw_err_id == this.Sub_ID )
+			if( ((nw_status_array[this.Sub_ID]) == -1) )
 			{
-//		log.message("SEDONA: $name : Not able to connect to network!, Sublisher ID is $Sub_ID; NW status $nw_status; nw_err_id $nw_err_id\n")
 			this.status := Disconnected
 			this.Int_Msg := -1
+			error := Err_Unknown
 			}
 			else
+			{
 			this.status := Connected
+			error := No_Err
+			}
 		}
+
 		if( !this.Enable )
 		{
 		this.status := Disconnected
@@ -162,15 +162,12 @@ define Log log
 		}	
 	}
 
-static protected Obj handle = null
-//inline int[SUB_MAX] handle;
-
 Str topic_rcd;
 define int SUB_MAX = 30;
-private int nw_status = 0;
-private int nw_err_id = -1;
 private int msg_int = -1;
-private static inline int[SUB_MAX] nw_arr;
+inline int[SUB_MAX] array_dummy;
+int[SUB_MAX] nw_status_array;
+int[SUB_MAX] nw_disable_array;
 
 //Don't declare the below two variables as static, it will not create the Sub_IDs correctly.
 int count = 1;

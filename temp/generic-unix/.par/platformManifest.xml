@@ -139,16 +139,12 @@
   <nativeMethod qname="mqtt::MqttDev.doMqttPublisherInt" id="95::0" />
   <nativeMethod qname="mqtt::MqttDev.doMqttPublisherMsg" id="95::1" />
   <nativeMethod qname="mqtt::MqttDev.doMqttInit_pub" id="95::2" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus" id="95::3" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID" id="95::4" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj_Pub" id="95::5" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberInt" id="95::6" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberMsg" id="95::7" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttInit_sub" id="95::8" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus_Sub" id="95::9" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Sub" id="95::10" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttNwErrID_Obj_Sub" id="95::11" />
-  <nativeMethod qname="mqtt::MqttDev.doMqttRead_Topic" id="95::13" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus_Pub" id="95::3" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberInt" id="95::4" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttSubscriberMsg" id="95::5" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttInit_sub" id="95::6" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttNetworkStatus_Sub" id="95::7" />
+  <nativeMethod qname="mqtt::MqttDev.doMqttRead_Topic" id="95::8" />
 </natives>
 
 <manifestIncludes>

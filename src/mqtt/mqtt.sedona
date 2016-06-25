@@ -15,15 +15,11 @@ class MqttDev
 native static int doMqttPublisherMsg(int Pub_ID, bool enable, int msg, Str host, Str topic, int port, Str clientid, Str username, Str password, int qos )
 native static int doMqttPublisherInt()
 native static int doMqttInit_pub()
-native static int doMqttNetworkStatus()
-native static int doMqttNwErrID()
-native static int[MQTTPUB.PUB_MAX] doMqttNwErrID_Obj_Pub(int[MQTTPUB.PUB_MAX] array_test)
-//native static int[MQTTPUB.PUB_MAX] doMqttArrayTest(int[MQTTPUB.PUB_MAX] array_test)
+native static int[MQTTPUB.PUB_MAX] doMqttNetworkStatus_Pub(int[MQTTPUB.PUB_MAX] array_test)
 native static int doMqttSubscriberMsg(int Sub_ID, bool enable, int msg, Str host, Str topic, int port, Str clientid, Str username, Str password, int qos )
 native static int doMqttSubscriberInt(int Sub_ID)
 native static int doMqttInit_sub()
-native static int doMqttNetworkStatus_Sub()
-native static int doMqttNwErrID_Sub()
-native static int[MQTTSUB.SUB_MAX] doMqttNwErrID_Obj_Sub(int[MQTTSUB.SUB_MAX] array_test)
+native static int[MQTTSUB.SUB_MAX] doMqttNetworkStatus_Sub(int[MQTTSUB.SUB_MAX] array_test)
 native static Str doMqttRead_Topic()
+
 }

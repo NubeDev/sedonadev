@@ -15,17 +15,12 @@ void *subscriber_func( void *ptr );
 pthread_t thread2;
 const char *message_mqtt_sub = "Mqtt Subscriber Thread";
 int  iret3;
-static int Sub_Enable[SUB_MAX];
-static int int_sedona[SUB_MAX];
-char titus_buffer [100];
-char *titus_rx_buffer;
-static int titus_rx_buffer_int = 0;
+
+char *rx_buffer;
+static int rx_buffer_int = 0;
 int table_max_sub = 0;
 static int thread_status;
-static int enable_arr[SUB_MAX];
-static int i_bkp = 0;
-static int table_max_sub_bkp = 0;
-volatile int toStop = 0;
+static int nw_status_arr[SUB_MAX];
 int rc_sub = 0;
 static unsigned char buf[100];
 static unsigned char readbuf[100];
@@ -45,20 +40,15 @@ struct
 	int topic_msg_int;
 	bool enable;
 	int subid;
-	int nw_status;
 }opts_sub[SUB_MAX];
-// =
-//{
-//	{ (char*)"pubclient", QOS2, NULL, NULL, (char*)"localhost", 1883, (char*)"topic1", 0, 0, 0, 0}
-//};
 
 void add_to_table_sub( int subid, bool enable, int msg, char* host, char* topic, int port, char* clientid, char* username, char* password, int qos )
 {
 int index = 0;
 int duplicate_id = 0;
 
-if(!mqtt_sub_init)
-mqtt_MqttDev_doMqttInit_sub();
+	if(!mqtt_sub_init)
+	mqtt_MqttDev_doMqttInit_sub();
 
 	while(index < SUB_MAX)                                                                               
 	{
@@ -117,58 +107,13 @@ mqtt_MqttDev_doMqttSubscriberMsg(SedonaVM* vm, Cell* params)
 	add_to_table_sub(params[0].ival, params[1].ival, params[2].ival, params[3].aval, params[4].aval, params[5].ival, params[6].aval, params[7].aval, params[8].aval, params[9].ival);
 }
 
-mqtt_MqttDev_doMqttNetworkStatus_Sub(SedonaVM* vm, Cell* params)
+Cell mqtt_MqttDev_doMqttNetworkStatus_Sub(SedonaVM* vm, Cell* params)
 {
-int i = 0;
-	for(i = 0; i < table_max_sub; i++)
-	{
-		if(opts_sub[i].nw_status < 0)
-		{
-//		printf(" * [MQTT:SUB%d] Not able to connect, opts_sub[%d].nw_status -> %d\n",i ,i ,opts_sub[i].nw_status);
-		return -1;
-		}
-	}
-//Resetting to older value
-	for(i = 0; i < table_max_sub; i++)
-	{
-	opts_sub[i].nw_status = 1;
-	enable_arr[i] = 1;
-	}
-return 0;
-}
-
-mqtt_MqttDev_doMqttNwErrID_Sub(SedonaVM* vm, Cell* params)
-{
-int i = 0;
-static i_bkp = 0;
-	for(i = 0; i < table_max_sub; i++)
-	{
-		if(opts_sub[i].nw_status < 0)
-		{
-//		printf(" * [MQTT:SUB] Not able to connect the network in Subscriber ID is %d opts_sub[%d].nw_status %d\n",i,i,opts_sub[i].nw_status);
-		i_bkp = i;
-		return i;//return the subid to sedona
-		}
-	}
-//	return -1;//return the subid to sedona
-	return i_bkp;//return the subid to sedona
-}
-
-Cell mqtt_MqttDev_doMqttNwErrID_Obj_Sub(SedonaVM* vm, Cell* params)
-{
-int i = 0;
-	for(i = 0; i < table_max_sub; i++)
-	{
-		if(opts_sub[i].nw_status < 0)
-		{
-		Cell result;
-		result.aval = &enable_arr;
-
-		printf(" * [MQTT:SUB] address of enable_arr %u which is returned to Sedona\n",&enable_arr);
-		return result;
-		}
-	}
-	return negOneCell;//return the subid to sedona
+Cell result;
+int *buf = (int*)params[0].aval;
+buf = &nw_status_arr;
+result.aval = buf;
+return result;
 }
 
 mqtt_MqttDev_doMqttSubscriberInt(SedonaVM* vm, Cell* params)
@@ -186,37 +131,26 @@ mqtt_MqttDev_doMqttSubscriberInt(SedonaVM* vm, Cell* params)
 	thread_status++;
 	}
 
-//printf(" * [MQTT:SUB] : mqtt_MqttDev_doMqttSubscriberInt return %d\n",titus_rx_buffer_int);
-
-//printf(" * [MQTT:SUB] ##################### mqtt_MqttDev_doMqttSubscriberInt, received data is %d #######################\n",titus_rx_buffer_int);
-
-return titus_rx_buffer_int;
-}
-
-mqtt_MqttDev_doMqttSubscriberIDSend(SedonaVM* vm, Cell* params)
-{
+return rx_buffer_int;
 }
 
 void messageArrived(MessageData* md)
 {
 MQTTMessage* message = md->message;
-titus_rx_buffer = malloc(message->payloadlen);
-memset(titus_rx_buffer, 0, message->payloadlen);
-memcpy(titus_rx_buffer, message->payload, message->payloadlen);
-titus_rx_buffer_int = atoi(titus_rx_buffer);
-//printf(" * [MQTT:SUB] ##################### Message Arrived! and data is %d #######################\n",titus_rx_buffer_int);
+rx_buffer = malloc(message->payloadlen);
+memset(rx_buffer, 0, message->payloadlen);
+memcpy(rx_buffer, message->payload, message->payloadlen);
+rx_buffer_int = atoi(rx_buffer);
+//printf(" * [MQTT:SUB] ##################### Message Arrived! and data is %d #######################\n",rx_buffer_int);
 }
 
 void *subscriber_func( void *ptr )
 {
 int i;
-
+int dummy;
 char *message;
 message = (char *) ptr;
-int threadid;
-//get the ID of thread
-threadid = (int)syscall(224);
-printf(" * [MQTT:SUB] \"%s\" thread is called, ID is %d\n",message,threadid);
+printf(" * [MQTT:SUB] \"%s\" Subscriber thread function is called\n",message);
 
 	while(1)
 	{
@@ -241,41 +175,23 @@ printf(" * [MQTT:SUB] \"%s\" thread is called, ID is %d\n",message,threadid);
 //			printf(" * [MQTT:SUB] Connecting to %s %d\n", opts_sub[i].host, opts_sub[i].port);
 			rc_sub = MQTTConnect(&c, &data);
 
-//			printf(" * [MQTT:SUB%d] Connected %d\n", i, c.isconnected);
+//			printf(" * [MQTT:SUB%d] Connected %d, rc_sub -> %d \n", i, c.isconnected, rc_sub);
 
-#if 1
-			if(c.isconnected)
-			{
-			enable_arr[i]     = 1;
-			opts_sub[i].nw_status = 1;
-			}
-			else
+			if( c.isconnected < 0 || rc_sub < 0 )
 			{
 			printf(" * [MQTT:SUB%d] Not able to connect, please do make sure that provided \"host\" or \"cliendid\" is correct, status %d\n", i, rc_sub);
-			enable_arr[i]     = -1;
-			opts_sub[i].nw_status = -1;
+			nw_status_arr[i]     = -1;
+			goto disconnect;
 			}
-#endif
-
-#if 0
-			if(rc_sub != 0)
-				{
-				printf(" * [MQTT:SUB%d] Not able to connect, please do make sure that provided \"host\" or \"cliendid\" is correct, status %d\n", i, rc_sub);
-				enable_arr[i]     = -1;
-				opts_sub[i].nw_status = -1;
-				}
 			else
-				{
-				enable_arr[i]     = 1;
-				opts_sub[i].nw_status = 1;
-//				printf(" * [MQTT:SUB] Connected %d\n", rc_sub);
-				}
-#endif	
+			nw_status_arr[i]     = 1;
    
-//			printf(" * [MQTT:SUB] Subscribing to %s\n", opts_sub[i].topic);
+//			printf(" * [MQTT:SUB%d] Subscribing to %s\n", i, opts_sub[i].topic);
 			rc_sub = MQTTSubscribe(&c, opts_sub[i].topic, opts_sub[i].qos, messageArrived);
-//			printf(" * [MQTT:SUB] Subscribed to \"%s\", status is %d\n", opts_sub[i].topic,rc_sub);
+//			printf(" * [MQTT:SUB%d] Subscribed to \"%s\", status is %d\n", i, opts_sub[i].topic,rc_sub);
 			MQTTYield(&c, 100);//Its worked! It might needed if we don't want to use "msleep"
+disconnect:
+			dummy=0;
 			}
 		}
 	}

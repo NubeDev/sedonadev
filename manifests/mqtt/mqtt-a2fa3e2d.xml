@@ -1,0 +1,180 @@
+<?xml version='1.0'?>
+<kitManifest
+   name="mqtt"
+   checksum="a2fa3e2d"
+   hasNatives="true"
+   doc="true"
+   version="1.2.28"
+   vendor="Tridium"
+   description="Support for Raspberry Pi MQTT"
+   buildHost="titus-laptop"
+   buildTime="2016-07-19T19:56:03.188+05:30"
+>
+
+<!-- Dependencies -->
+<depends>
+  <depend on="sys 1.2"/>
+</depends>
+
+<!-- mqtt::MQTTINIT -->
+<type id="0" name="MQTTINIT" sizeof="36" base="sys::Component">
+</type>
+
+<!-- mqtt::MQTTPUB -->
+<type id="1" name="MQTTPUB" sizeof="388" base="sys::Component">
+  <slot id="0" name="Host" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="64"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="Port" type="int" flags="c" default="1883">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="Topic" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="64"/>
+    </facets>
+  </slot>
+  <slot id="3" name="Clientid" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="4" name="Username" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="5" name="Password" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="6" name="Int_Msg" type="int" flags="c" default="0">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="7" name="QOS" type="int" flags="c" default="2">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="8" name="Enable" type="bool" flags="c" default="false">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="9" name="status" type="byte" default="0">
+    <facets>
+      <str name="range" val="Disconnected, Connected"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="error" type="byte" default="0">
+    <facets>
+      <str name="range" val="No Err, Invalid Host, Invalid Port, Invalid ClientId, Invalid Topic, Unknown Err"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="11" name="Pub_ID" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+<!-- mqtt::MQTTSUB -->
+<type id="2" name="MQTTSUB" sizeof="396" base="sys::Component">
+  <slot id="0" name="Host" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="64"/>
+      <bool name="defaultOnClone" val="true"/>
+    </facets>
+  </slot>
+  <slot id="1" name="Port" type="int" flags="c" default="1883">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="2" name="Topic" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="64"/>
+    </facets>
+  </slot>
+  <slot id="3" name="Clientid" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="4" name="Username" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="5" name="Password" type="sys::Buf" flags="cs">
+    <facets>
+      <bool name="asStr" val="true"/>
+      <bool name="config" val="true"/>
+      <int name="max" val="16"/>
+    </facets>
+  </slot>
+  <slot id="6" name="Int_Msg" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="7" name="QOS" type="int" flags="c" default="2">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="8" name="Enable" type="bool" flags="c" default="false">
+    <facets>
+      <bool name="config" val="true"/>
+    </facets>
+  </slot>
+  <slot id="9" name="status" type="byte" default="0">
+    <facets>
+      <str name="range" val="Disconnected, Connected"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="10" name="error" type="byte" default="0">
+    <facets>
+      <str name="range" val="No Err, Invalid Host, Invalid Port, Invalid ClientId, Invalid Topic, Unknown Err"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+  <slot id="11" name="Sub_ID" type="int" flags="c" default="-1">
+    <facets>
+      <bool name="config" val="true"/>
+      <bool name="readonly" val="true"/>
+    </facets>
+  </slot>
+</type>
+
+</kitManifest>

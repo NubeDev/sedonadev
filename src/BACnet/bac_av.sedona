@@ -112,7 +112,7 @@ Sys.out.print("SEDONA: $name: BACnetAV: \"BACnetAV\" is enabled without enabling
 //overriding part
 if( ia[ObjectID] == 1 )
       {
-	Sys.out.print("SEDONA: $name: BACnetAV: I'm in BACNET WRITE loop $ret3 $ov $objID_status  $ret8\n")
+//Sys.out.print("OVERRIDE: SEDONA: $name: BACnetAV: I'm in BACNET WRITE loop $ret3 $ov $objID_status  $ret8\n")
 	Out := ret
 	ov = true;
 	//clearing the override
@@ -120,9 +120,10 @@ if( ia[ObjectID] == 1 )
       }
 
 //all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
-if ( (ret3 == 1) && (ov == false) && (objID_status == false) && (ret8 == false) )
+if ( (ret3 == 1) && (ov == false) && (objID_status == false) && (ret8 == false) )//Titus: Modified on July18th
+//if ( (ret3 == 1) && (ov == false) && (objID_status == false) && (ret8 == false) && ib[this.ObjectID] == false)
 {
-Sys.out.print("SEDONA: $name: BACnetAV: I'm in SEDONA WRITE loop  $ret3 $ov $objID_status  $ret8 \n")
+//Sys.out.print("SEDONA: $name: BACnetAV: I'm in SEDONA WRITE loop  $ret3 $ov $objID_status  $ret8 \n")
 
 //if(!ib[ObjectID])
 if(In_change)
@@ -158,9 +159,9 @@ ret8 = BACnetDev.doBacnetAVNullStatus()
 
 if ( ib[this.ObjectID] == true )
 {
-Sys.out.print("SEDONA: $name: BACnetAV: NULL loop status -> $ret8  ObjectID -> $ObjectID ret9 -> $ret9 ret8 -> $ret8\n")
+//Sys.out.print("SEDONA: $name: BACnetAV: NULL loop status -> $ret8  ObjectID -> $ObjectID ret9 -> $ret9 ret8 -> $ret8\n")
 //clear the event
-ia[ObjectID] = -5;
+ia[this.ObjectID] = -5;
 ret8 = false
 
 null_status2 = true;
@@ -172,6 +173,8 @@ In_change = true;
 }
 else
 In_change = false;
+
+//Sys.out.print("SEDONA: $name: BACnetAV: NULL loop status -> In_change : $In_change\n")
 
 }
 

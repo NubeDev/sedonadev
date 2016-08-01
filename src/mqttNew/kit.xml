@@ -1,0 +1,52 @@
+<!--
+  -  Sedona Kit
+  -  Copyright 2013 Tridium Inc, All Rights Reserved.
+  -  21 Jul 16  Titus   created
+  -  22 Jul 16  Titus   modified
+  -->
+
+<sedonaKit
+ name = "mqttNew"
+ vendor = "Tridium"
+ description = "Support for Raspberry Pi MQTT in newer method"
+ includeSource = "true"
+ doc = "true"
+>
+
+  <!-- Dependencies -->
+  <depend on="sys 1.2" />
+
+  <!-- Source Directories -->
+  <source dir="."/>
+
+  <!-- Natives -->
+
+  <!-- MQTT Publisher fns -->
+  <native qname="mqttNew::MqttNew.doMqttNewInit_pub"              id="96::0" />
+  <native qname="mqttNew::MqttNew.doMqttNewPublisherInt"          id="96::1" />
+  <native qname="mqttNew::MqttNew.doMqttNewPublisherMsg"          id="96::2" />
+  <native qname="mqttNew::MqttNew.doMqttNewNetworkStatus_Pub"     id="96::3" />
+
+
+  <!-- MQTT Subscriber fns -->
+
+  <native qname="mqttNew::MqttNew.doMqttNewInit_sub"              id="96::4" />
+  <native qname="mqttNew::MqttNew.doMqttNewSubscriberInt"         id="96::5" />
+  <native qname="mqttNew::MqttNew.doMqttNewSubscriberMsg"         id="96::6" />
+  <native qname="mqttNew::MqttNew.doMqttNewNetworkStatus_Sub"     id="96::7" />
+  <native qname="mqttNew::MqttNew.doMqttNewRead_Topic"            id="96::8" />
+
+
+
+  <!-- Old MQTT Subscriber fns -->
+<!--
+  <native qname="mqttNew::MqttNew.doMqttSubscriberInt"         id="96::9" />
+  <native qname="mqttNew::MqttNew.doMqttSubscriberMsg"         id="96::10" />
+  <native qname="mqttNew::MqttNew.doMqttInit_sub"              id="96::11" />
+  <native qname="mqttNew::MqttNew.doMqttNetworkStatus_Sub"     id="96::12" />
+  <native qname="mqttNew::MqttNew.doMqttRead_Topic"            id="96::13" />
+-->
+
+
+</sedonaKit>
+

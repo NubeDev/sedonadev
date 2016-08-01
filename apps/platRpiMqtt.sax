@@ -23,7 +23,7 @@
   <kit name='rpiDigitalIo' />
   <kit name='BACnet' />
   <kit name='i2c' />
-  <kit name='mqtt' />
+  <kit name='mqttNew' />
 
 </schema>
 

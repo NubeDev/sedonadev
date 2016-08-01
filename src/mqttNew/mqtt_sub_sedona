@@ -1,0 +1,186 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   18 Jun 16  Titus   created
+//   23 Jun 16  Titus   Modified
+//
+
+//@niagaraIcon="module://icons/x16/io.png"
+class MQTTSUB
+  extends Component    
+{
+@defaultOnClone
+@config @asStr property Buf(64) Host
+@config property int Port = 1883
+@config @asStr property Buf(64) Topic
+@config @asStr property Buf(16) Clientid
+@config @asStr property Buf(16) Username
+@config @asStr property Buf(16) Password
+//@config @readonly property int Int_Msg = -1
+@config @asStr @readonly property Buf(16) Int_Msg
+@config property int QOS = 2
+@config property bool Enable = false
+
+define int Disconnected = 0
+define int Connected = 1
+define Str NetworkStatus = "Disconnected, Connected"
+@range=NetworkStatus
+@readonly property byte status = Disconnected
+
+define int No_Err = 0
+define int Err_InvalidHost = 1
+define int Err_InvalidPort = 2
+define int Err_InvalidClientId = 3
+define int Err_InvalidTopic = 4
+define int Err_Unknown = 5
+
+define Str NwError = "No Err, Invalid Host, Invalid Port, Invalid ClientId, Invalid Topic, Unknown Err"
+@range=NwError
+@readonly property byte error = 0
+
+@config @readonly property int Sub_ID = -1
+define Log log
+
+	virtual override void stop()
+	{
+	log.message("MQTT Subscriber app is stopped!\n")
+	}
+
+	virtual override void start()
+	{
+	log.message("MQTT Subscriber app is started!\n")
+	// Don't touch hardware until input value is valid
+	if ( !Sys.app.isSteadyState() ) 
+	return
+
+	if (name.equals("MQTTSUB"))
+	inst = 0;
+	if (name.equals("MQTTSU1"))
+	inst = 1;
+	if (name.equals("MQTTSU2"))
+	inst = 2;
+	if (name.equals("MQTTSU3"))
+	inst = 3;
+	if (name.equals("MQTTSU4"))
+	inst = 4;
+	if (name.equals("MQTTSU5"))
+	inst = 5;
+	if (name.equals("MQTTSU6"))
+	inst = 6;
+	if (name.equals("MQTTSU7"))
+	inst = 7;
+	if (name.equals("MQTTSU8"))
+	inst = 8;
+	if (name.equals("MQTTSU9"))
+	inst = 9;
+	if (name.equals("MQTTS10"))
+	inst = 10;
+	if (name.equals("MQTTS11"))
+	inst = 11;
+	if (name.equals("MQTTS12"))
+	inst = 12;
+	if (name.equals("MQTTS13"))
+	inst = 13;
+	if (name.equals("MQTTS14"))
+	inst = 14;
+	if (name.equals("MQTTS15"))
+	inst = 15;
+	}
+
+	bool validInputs()
+	{
+		if ( Port == 0 )
+			error := Err_InvalidPort
+		else if (Host.toStr().length() == 0)
+			error := Err_InvalidHost
+		else if (Clientid.toStr().length() == 0)
+			error := Err_InvalidClientId
+		else if (Topic.toStr().length() == 0)
+			error := Err_InvalidTopic
+		else
+			error := No_Err
+
+		if(!error)
+		return true;
+
+	return false;
+	}
+
+	override void changed(Slot slot)
+	{
+	super.changed(slot)
+	// Don't respond to prop changes while app is loading
+	if (!Sys.app.isRunning()) return
+	}
+
+	virtual override void execute()
+	{
+		if( count == 1 )
+		{
+			for ( int i=0; i<15; ++i )
+			{
+			if(inst == i)
+			Sub_ID := i
+			}
+		count++;
+		Clientid.copyFromStr("subscriber")
+		changed(MQTTSUB.Clientid)
+		}
+
+		if( this.Sub_ID != -1 )
+		{
+		MqttNew.doMqttSubscriberMsg(Sub_ID, Enable, Int_Msg.toStr(),  Host.toStr(), Topic.toStr(), Port, Clientid.toStr(), Username.toStr(), Password.toStr(), QOS)
+		}
+
+		if( this.Sub_ID != -1 && this.Enable && validInputs() )
+		{
+//		this.msg_int = MqttNew.doMqttSubscriberInt(this.Sub_ID)
+		this.message_rcd_sub = MqttNew.doMqttSubscriberInt(this.Sub_ID)
+		nw_status_array = MqttNew.doMqttNetworkStatus_Sub(array_dummy)
+		topic_rcd = MqttNew.doMqttRead_Topic()
+	
+			if( this.topic_rcd == Topic.toStr() )
+			{
+//			Int_Msg := this.msg_int
+			Int_Msg.copyFromStr(this.message_rcd_sub)
+			changed(MQTTSUB.Int_Msg)
+			}
+
+			if( ((nw_status_array[this.Sub_ID]) == -1) )
+			{
+			this.status := Disconnected
+//			this.Int_Msg := -1
+			Int_Msg.copyFromStr("null")
+			changed(MQTTSUB.Int_Msg)
+			error := Err_Unknown
+			}
+			else
+			{
+			this.status := Connected
+			error := No_Err
+			}
+		}
+
+		if( !this.Enable )
+		{
+		this.status := Disconnected
+//		this.Int_Msg := -1
+		Int_Msg.copyFromStr("null")
+		changed(MQTTSUB.Int_Msg)
+		}	
+	}
+
+Str message_rcd_sub;
+Str topic_rcd;
+define int SUB_MAX = 30;
+private int msg_int = -1;
+inline int[SUB_MAX] array_dummy;
+int[SUB_MAX] nw_status_array;
+int[SUB_MAX] nw_disable_array;
+
+//Don't declare the below two variables as static, it will not create the Sub_IDs correctly.
+int count = 1;
+int inst = -1;
+}

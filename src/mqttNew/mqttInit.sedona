@@ -1,0 +1,28 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   20 Jul 16  Titus   creation
+//
+
+
+//@niagaraIcon="module://icons/x16/io.png"
+class MqttNewDev
+  extends Component    
+{
+define Log log
+//This should call only one time
+	virtual override void start()
+	{
+	log.message("New MQTT Initializer app is started!\n");
+	++enabled;
+		if(enabled == 1)
+		{
+		MqttNew.doMqttNewInit_pub()
+		MqttNew.doMqttNewInit_sub()
+		}
+	}
+
+static int enabled = 0;
+}

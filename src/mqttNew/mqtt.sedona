@@ -1,0 +1,45 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   21 Jul 16  Titus   creation
+//   22 Jul 16  Titus   modified
+//
+
+class MqttNew
+{
+//////////////////////////////////////////////////////////////////////////
+// Native methods for Publisher
+//////////////////////////////////////////////////////////////////////////
+
+native static int doMqttNewPublisherMsg(int Pub_ID, bool enable, Str payload, Str host, Str topic, Str port, Str clientid, Str username, Str password)
+native static int doMqttNewPublisherInt()
+native static int doMqttNewInit_pub()
+native static int[MqttPub.PUB_MAX] doMqttNewNetworkStatus_Pub(int[MqttPub.PUB_MAX] array_test)
+
+//////////////////////////////////////////////////////////////////////////
+// Native methods for Subscriber
+//////////////////////////////////////////////////////////////////////////
+
+
+native static int doMqttNewSubscriberMsg(int Sub_ID, bool enable, Str payload, Str host, Str topic, Str port, Str clientid, Str username, Str password )
+//native static Buf doMqttNewSubscriberInt(int Sub_ID)
+native static Str doMqttNewSubscriberInt(int Sub_ID)
+native static int doMqttNewInit_sub()
+native static int[MqttSub.SUB_MAX] doMqttNewNetworkStatus_Sub(int[MqttSub.SUB_MAX] array_test)
+//native static Str[2] doMqttNewRead_Topic(Str[2] topic_array)
+native static Str doMqttNewRead_Topic()
+
+
+
+/*
+native static int doMqttSubscriberMsg(int Sub_ID, bool enable, Str msg, Str host, Str topic, int port, Str clientid, Str username, Str password, int qos )
+//native static int doMqttSubscriberInt(int Sub_ID)
+native static Str doMqttSubscriberInt(int Sub_ID)
+native static int doMqttInit_sub()
+native static int[MQTTSUB.SUB_MAX] doMqttNetworkStatus_Sub(int[MQTTSUB.SUB_MAX] array_test)
+native static Str doMqttRead_Topic()
+*/
+
+}
